@@ -1,0 +1,81 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Mit Google Assistant &#038; Firebase die Fahrtrichtung von ToboT via Stimme steuern</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        header,
+        footer {
+            font-size: 0.75rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        footer {
+            padding-top: 32px;
+        }
+
+        img {
+            max-width: 80%;
+            max-height: 400px;
+            display:block;
+            margin-left:auto;
+            margin-right:auto;
+        }
+    </style>
+</head>
+
+<header>
+    Tobias Scholze | The Stuttering Nerd
+    <hr />
+</header>
+
+<content>
+    <h1>Mit Google Assistant &#038; Firebase die Fahrtrichtung von ToboT via Stimme steuern</h1>
+
+    <p><strong>Wieso? Weshalb Warum?</strong></p>
+<p>Darum.</p>
+<p>ToboT ist und bleibt mein Wochenende-Projekt was absolut nichts mit meinem sonstigen Entwicklerleben zu tun hat. Ein auf Android Things und Raspberry Pi basierendes Vehicle. Dafür kein iOS, keine Deadlines, einfach der Spaß an der Freude an moderner Technik.</p>
+<p>Das ich mich jetzt aber wirklich einmal mit dem Thema der “Sprachsteuerung” beziehungsweise der Funktionsweiße des Google Assistant gewidmet habe, nach dem ich von der Erstellung von Skills für Alexa recht enttäuscht wurde, ist <a href="https://twitter.com/seraandroid?lang=de">Tim Messerschmidt von Google Deutschland</a> geschuldet.</p>
+<p>Als ich mit stolzer Brust den damaligen Stand von Tobot mit Mr. Flutter auf Twitter teilt, gab er den <a href="https://twitter.com/SeraAndroid/status/981632694692925440">Hinweiß</a> doch mal was mit Actions on Google (Assistant) zu machen. Ich fand die Idee eines “DIY Knight Rider” Autos sehr amüsant. Somit verbrachte ich den Tag der Arbeit mit Spaß(-Arbeit).</p>
+<p><img src="assets/java-android-tobot-6.png" alt="" /></p>
+<p>Das Schöne ist, dass dieses Projekt zwar niemals Produktivstatus was Security, Fehlersicherheit und die Eleganz des Quelltextes anbelangt, es aber wirklich mit einer meiner Lieblingsdinge ist, welche ich jemals selbst für mich geschrieben habe. Hach, IT – wie schön ist es mit dir.</p>
+<p><strong>Übersicht des Techstacks</strong></p>
+<p>Der Techstack beruht diesmal maßgeblich und absichtlich nur auf Produkten von Google. Google Assistant zur Benutzerinteraktion, Google Firebase Function und Realtime Database zum Datenhandling und Google Android Things als Exekutive auf dem Raspberry Pi.</p>
+<p><img src="assets/java-android-tobot-5.png" alt="" /></p>
+<p><strong>Google Assistant</strong></p>
+<p>Die Konfiguration meiner Action war relativ schnell gemacht. Das Wording wie “Intents” oder “Entity” in diesem Kontext kamen mir aus meiner CEP-Vorlesung an der Universität bekannt vor als auch, dass es unendlich viele Ressourcen auf der Produktseite von <a href="https://developers.google.com/actions/">developer.google.com</a> gibt.</p>
+<p>Hierbei stellte ich fest, dass wenn man “nur” experimentieren möchte, man eventuell noch nicht die API v2 nutzen sollte. Hierfür wurden etliche Tutorials noch nicht angepasst. Für mein Rumgespiele habe ich da jetzt aber auch keinerlei Nachteile gesehen – wie gesagt, das Projekt hat keinerlei Ambitionen “produktiv” zu sein.</p>
+<p><a href="https://tscholze.monstermunchkin.dev:8080/wp-content/uploads/2018/05/dialog2.png"><img src="https://tscholze.monstermunchkin.dev:8080/wp-content/uploads/2018/05/dialog2.png?w=300" alt="" /></a><a href="https://tscholze.monstermunchkin.dev:8080/wp-content/uploads/2018/05/dialog.png"><img src="https://tscholze.monstermunchkin.dev:8080/wp-content/uploads/2018/05/dialog.png?w=300" alt="" /></a></p>
+<p><strong>Firebase Function</strong></p>
+<p>Als Fulfillment Target bei meiner Action habe ich eine simple Firebase Function angegeben. Diese nimmt das auf sie geworfene JSON erst auseinander um schlussendlich die gewonnen Informationen in ein Firebase Database INSERT Statement verwandelt. Die Javascript Funktion ist kein Hexenwerk und wurde jetzt auch nicht von mir erfunden sondern aus verschiedenen Tutorials zusammen ge-frankenstein-ed.</p>
+<p>Hätte mir da bisschen mehr integrierte Logik ala “ich gebe dir das Objekt mit ID nach einem INSERT zurück” gewünscht. Eventuell hab ich es aber auch einfach nicht richtig verstanden. Alles ist möglich. Node.js und ich werden einfach keine Freunde.</p>
+<p><strong>Firebase Database</strong></p>
+<p>Als Mittelsmann zwischen dem Devices der Aussenwelt und meinem ToboT Vehicle nutze ich immer noch die Real Time Database von Firebase.</p>
+<p>Das Prozedere ist wirklich einfach erklärt. Ich füge neue Einträge über die Firebase Function oder andere Requester in die Datenbank hinzu, das Vehicle hört aktiv auf Changes in genau dieser Datenbank und führt diese aus. Falls alles klappt bewegt sich das Gefährt in die gewünschte Richtung.</p>
+<p>Ich wiederhole mich, dies würde man niemals in einer Produktionsumgebung machen. Beim Spaß haben ist (fast) alles erlaubt.</p>
+<p><strong>Picture or it didn’t happen</strong></p>
+<p>Ein Video sagt mehr als tausend Worte. Muss zugeben, als Person mit einem zeitweißen Sprachfehler sind solche Videos doch immer wieder eine starke Überwindung. Im Nachhinein ist man dennoch froh und stolz darauf. Wie hier im <a href="https://www.youtube.com/watch?v=gxPZONUJrf4">YouTube Video</a> zu sehen ist.</p>
+<p><strong>Was kommt noch?</strong></p>
+<p>Mal sehen.</p>
+<p>Auf jedenfalls Github Readme aktualisieren mit allen neuen was nun möglich ist. Eine Flutter Compagnien App wäre für mich persönlich wohl am naheliegensten. Falls ich vermehrt Lust auf Java und Android habe eventuell auch eine Anbindung an einen Bluetooth Controller einer gängigen Konsole. Mal sehen.</p>
+<p>Warten wir aber mal noch die Google I/O 208 ab – eventuell kommt da ja noch was viel tolleres was man an den ToBot anflanschen kann.</p>
+
+
+    <a href="index.html">Zur&uuml;ck</a>
+</content>
+
+<footer>
+    <hr />
+    Made with ❤️ without JavaScript| Kotlog | Tobias Scholze
+</footer>
+
+</html>

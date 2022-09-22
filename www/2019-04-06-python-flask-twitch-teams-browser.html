@@ -1,0 +1,66 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Mit Python &#038; Flask] einen Twitch Teams Browser bauen</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        header,
+        footer {
+            font-size: 0.75rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        footer {
+            padding-top: 32px;
+        }
+
+        img {
+            max-width: 80%;
+            max-height: 400px;
+            display:block;
+            margin-left:auto;
+            margin-right:auto;
+        }
+    </style>
+</head>
+
+<header>
+    Tobias Scholze | The Stuttering Nerd
+    <hr />
+</header>
+
+<content>
+    <h1>Mit Python &#038; Flask] einen Twitch Teams Browser bauen</h1>
+
+    <p><strong>tl;dr</strong><br />
+Ich habe etwas mit Python und Flask experimentiert und heraus kam der <a href="https://github.com/tscholze/python-flask-twitch-team-browser">TTB</a>. Eine kleine Webanwendung mit dem man Twitch Teams und dessen Mitglieder inklusive Online-Status und Co. aufgelistet bekommt.</p>
+<p><strong>Hintergrund</strong><br />
+Es ist schon einige Zeit her seit dem ich etwas mit Web und Co. gemacht habe. Aus diesem Grund wollte ich einmal wieder damit experimentieren aber ohne den großen Overhead und damit Trägheit von Java EE *.wars oder dicken Python Django Projekten zu haben.</p>
+<p>Aus meiner Studienzeit war mit Flask noch ein Begriff. Es stellte sich heraus das dieses kleine Framework wirklich leichtfüßig ist und einen schnellen Einstieg in die Webwelt mit Python auch für Anfänger bietet.</p>
+<p><strong>Script</strong><br />
+Das Script nutzt zwei einfache Twitch API Endpoints um einmal die Teaminformation abzufragen und auf Grundlage dieser den Online-Status der Mitglieder anfordert.</p>
+<p>Diese werden dann in einfachen Templates für den Browser heraus gerendert – ganz ohne JavaScript.</p>
+<p>Damit die Seite überhaupt etwas nach etwas aussieht habe ich mich wie so oft bei <a href="https://developer.microsoft.com/en-us/fabric"><em>Microsoft Office Fabrics Stylesheet</em></a> bedient. Auch wenn hierbei der Fokus auf React liegt, kann man auch für “Vanilla” Projekte hier einiges erleichterndes abgreifen.</p>
+<p><img src="assets/python-flask-twitch-team-browser.png" alt="" /></p>
+<p>Danke auch an das wirklich schnell und hilfreich antwortende <a href="https://discuss.dev.twitch.tv/t/get-online-status-of-stream-of-twitch-team-members/20764/2">Twitch Developer Forum</a>. Hier erhielt ich den entscheidenden Tipp wie ich die Online-Status-Funktionalität einbauen kann. Merci.</p>
+<p>Die Quelltexte dazu liegen wie immer auf meinem GitHub Profil im Repository <a href="https://github.com/tscholze/python-flask-twitch-team-browser"><em>python-flask-twitch-team-browser</em>.</a></p>
+
+
+    <a href="index.html">Zur&uuml;ck</a>
+</content>
+
+<footer>
+    <hr />
+    Made with ❤️ without JavaScript| Kotlog | Tobias Scholze
+</footer>
+
+</html>

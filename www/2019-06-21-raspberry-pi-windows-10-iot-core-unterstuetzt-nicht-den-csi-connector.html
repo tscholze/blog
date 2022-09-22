@@ -1,0 +1,67 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Raspberry Pi + Windows 10 IoT Core unterstützt nicht den CSI Connector</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        header,
+        footer {
+            font-size: 0.75rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        footer {
+            padding-top: 32px;
+        }
+
+        img {
+            max-width: 80%;
+            max-height: 400px;
+            display:block;
+            margin-left:auto;
+            margin-right:auto;
+        }
+    </style>
+</head>
+
+<header>
+    Tobias Scholze | The Stuttering Nerd
+    <hr />
+</header>
+
+<content>
+    <h1>Raspberry Pi + Windows 10 IoT Core unterstützt nicht den CSI Connector</h1>
+
+    <p><strong>tl;dr</strong><br />
+Diese Woche musste ich lernen, dass wohl doch nicht alles Plug-and-Play bei Windows als auch beim Pi ist. Die offizielle Kamera wird nicht unterstützt.</p>
+<p><strong>Wieso, weshalb?</strong><br />
+Nachdem ich lange versucht habe mittels den <a href="https://github.com/microsoft/Windows-universal-samples/tree/master/Samples/CameraStarterKit">UWP Beispielen von Microsoft</a> die offizielle Raspberry Pi Kamera via dem <a href="https://en.wikipedia.org/wiki/Camera_Serial_Interface">CSI</a>-Port anzusprechen, habe ich dich einmal auf SO nachgefragt wie es denn eigentlich richtig geht und wieso überhaupt das fehlschlägt.</p>
+<p><img src="assets/rpi-cis-connecter.jpg" alt="" />
+Basierend auf <a href="https://de.wikipedia.org/wiki/Raspberry_Pi#/media/Datei:Raspberry_Pi_2_Model_B_v1.1_top_new_(bg_cut_out).jpg">Wikipedia Bild</a>:</p>
+<p><strong>Stackoverflow to the rescue</strong> Das Stockoverflow Mitglied <a href="https://raspberrypi.stackexchange.com/users/105250/stormbolter"><em>stormbolt</em></a> hatte eine erklärend Antwort auf meine <a href="https://raspberrypi.stackexchange.com/questions/99850/using-raspberry-pi-camera-csi-with-windows-10-iot-core?noredirect=1#comment164459_99850">Frage</a> im Raspberry Pi Bereich gehabt. Diese ist gleichzeitig demotivierend jedoch lässt diese mich auch zuversichtlich in die Zukunft blicken lässt:</p>
+<blockquote>
+<p>Is my understanding the main problem was the lack of open source drivers, and the unwillingness of Broadcom to release propietary drivers for windows IoT. Now that there are open source drivers for the CSI and DSI ports, it should be possible to port them to windows, if someone with the technical knowledge steps up to the task.</p>
+</blockquote>
+<p>Stackoverflow <a href="https://raspberrypi.stackexchange.com/questions/99850/using-raspberry-pi-camera-csi-with-windows-10-iot-core?noredirect=1#comment164459_99850">Post</a></p>
+<p><strong>Es is ja nicht das einzige …</strong>
+Mal sehen was zu erst kommen wird, Raspberry Pi 4 oder CSI Support in Windows 10 IoT Core.</p>
+
+
+    <a href="index.html">Zur&uuml;ck</a>
+</content>
+
+<footer>
+    <hr />
+    Made with ❤️ without JavaScript| Kotlog | Tobias Scholze
+</footer>
+
+</html>

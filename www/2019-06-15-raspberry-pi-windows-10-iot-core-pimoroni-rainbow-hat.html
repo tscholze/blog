@@ -1,0 +1,75 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Raspberry Pi + Windows 10 IoT Core + Pimoroni Rainbow HAT = <3</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        header,
+        footer {
+            font-size: 0.75rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        footer {
+            padding-top: 32px;
+        }
+
+        img {
+            max-width: 80%;
+            max-height: 400px;
+            display:block;
+            margin-left:auto;
+            margin-right:auto;
+        }
+    </style>
+</head>
+
+<header>
+    Tobias Scholze | The Stuttering Nerd
+    <hr />
+</header>
+
+<content>
+    <h1>Raspberry Pi + Windows 10 IoT Core + Pimoroni Rainbow HAT = <3</h1>
+
+    <p><strong>tl;dr</strong><br />
+Nachdem ich letztens mein erstes <a href="https://developer.microsoft.com/en-us/windows/iot">Windows 10 IoT Core</a> Projekt in Version 1.0 abgeschlossen habe, war diesmal nun der etwas kompliziertere <a href="https://shop.pimoroni.com/products/rainbow-hat-for-android-things">Pimoroni Rainbow HAT</a> an der Reihe.</p>
+<p><strong>Motivation</strong><br />
+Ursprünglich war dieser HAT ein Demo-Kit um mit Android Things experimentieren zu können. Da dieses aber nun mehr oder weniger tot ist habe ich eine weitere Verwendung für das Stück Technik gesucht. Schließlich wurde ich bei einem Windows 10 IoT Port “fündig.</p>
+<p><strong>Features des HATs</strong><br />
+Der Rainbow HAT für den Raspberry Pi verfügt über folgende Fähigkeiten:</p>
+<ul>
+<li>Große rot, grün und blaue LEDs unterhalb den Buttons</li>
+<li>Drei A,B,C Buttons</li>
+<li>Piezo Vibrationselement</li>
+<li>APA102 Baustein um sieben Farb-LEDs anzusteuern</li>
+<li>HT16K33 Baustein um vier 14-Segment anzeigen zu bespielen.</li>
+<li>BMP280 Baustein für die Temperatur- und Luftdrucksensoren</li>
+</ul>
+<p><img src="assets/ms-pi-rainbow.jpg" alt="" /></p>
+<p><strong>Lessons learned</strong><br />
+Zu den Sensoren muss man sagen, dass diese nur einen Trend oder Indiz für die wirklichen Werte liefern können. So ist der Temperatursensor nur wenige Millimeter von der sich aufheizenden Prozessor des Pis entfernt. Somit sind die Messungen (leicht) verfälscht.</p>
+<p>Nichtsdestotrotz kann man hierbei super den Umgang mit GPIOs-, I2C- und PWM-Controllern erlernen.</p>
+<p>Ein Großteil der Logik basiert auf der originalen <a href="https://github.com/pimoroni/rainbow-hat/tree/master/library">Python-Implementierung</a> von Pimoroni.</p>
+<p><strong>Quelltext</strong><br />
+Die mit vielen Kommentaren versehenen Quelltexte zur App liegen wie immer auf meinem GitHub Profil im Repository <em><a href="https://github.com/tscholze/dotnet-iot-homebear-blinkt">dotnet-iot-homebear-rainbow</a></em>. Als auch als <a href="https://www.hackster.io/tscholze/homebear-rainbow-windows-10-iot-core-pimoroni-rainbowhat-f1d2dc">Hackster.io Projekt</a> zu finden.</p>
+
+
+    <a href="index.html">Zur&uuml;ck</a>
+</content>
+
+<footer>
+    <hr />
+    Made with ❤️ without JavaScript| Kotlog | Tobias Scholze
+</footer>
+
+</html>
