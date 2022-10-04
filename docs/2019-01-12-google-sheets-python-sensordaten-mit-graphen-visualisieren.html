@@ -1,29 +1,35 @@
 <!doctype html>
-<html class="no-js" lang="">
+        <html class="no-js" lang="">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog2019-01-12-google-sheets-python-sensordaten-mit-graphen-visualisieren.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog2019-01-12-google-sheets-python-sensordaten-mit-graphen-visualisieren.html.png">
+          <meta property="og:title" content="Mit Google Sheets &#038; Python Sensordaten mit Graphen visualisieren">
+          <meta property="og:description" content="">
 
-    <title>Mit Google Sheets &#038; Python Sensordaten mit Graphen visualisieren</title>
+          <title>Tobias Scholze | The Stuttering Nerd</title>
 
-    <link rel="icon" href="favicon.ico" sizes="any">
-    <link rel="icon" href="icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
-    <link rel="stylesheet" href="style.css">
-</head>
+          <link rel="stylesheet" href="style.css">
+        </head>
 
-<header>
-    Tobias Scholze | The Stuttering Nerd
-    <hr />
-</header>
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
 
-<content>
-    <h1>Mit Google Sheets &#038; Python Sensordaten mit Graphen visualisieren</h1>
-
-    <p>Jeder Entwickler, der eher im Backend und Logik anstatt an der Oberfläche schaffen will hat einen Nemesis: Graphen.</p>
+        <content>
+                            <h1>Mit Google Sheets &#038; Python Sensordaten mit Graphen visualisieren</h1>
+                
+                <p>Jeder Entwickler, der eher im Backend und Logik anstatt an der Oberfläche schaffen will hat einen Nemesis: Graphen.</p>
 <p>Diese Datendarstellungsform hat jedoch einen ließen Vorteil. Man erkennt schnell Trends auch bei einer großen Anzahl an Werten.</p>
 <p><img src="assets/python-sensor-dashboard.png" alt="" /></p>
 <p>Aus diesem Grund habe ich mal ein bisschen mit der Google Sheets API experimentiert. Der Träger war wie so oft ein Raspberry Pi B und als Sensor kam der <a href="https://shop.pimoroni.de/products/enviro-phat">Enviro-HAT</a> von <a href="https://shop.pimoroni.de">Pimoroni</a> zum Einsatz. Dieser bringt bereits eine extrem einfache Library mit welche sich bequem über <em>pip</em> installieren lässt.</p>
@@ -35,13 +41,13 @@
 <p>Es geht einfacher als gedacht wobei ich für mich normale Szenarien wie “Füge am Schluss neue Zeile ein” nicht in der API wiedergefunden habe. Der Workaround, dass ich mir die letze Zeile ausrechne funktioniert nur, wenn in diesem Tabellenblatt der Rohdaten keinerlei händischen Daten abseits der Kopfzeile eingetragen sind.</p>
 <p>Als auch stellte ich fest, dass am Enviro-HAT der Temperatursensor etwas zu nah über dem Prozessor des Raspberry Pis legt. Somit sind verständlicherweise keine realen Temperaturwerte ablesbar. Hierbei wäre jedoch eine Deltawert-Analyse um generelle Trends zu erkennen sinnvoller als die absoluten Messwerte.</p>
 
+                 
+                 <a href="index.html">Back</a>
+        </content>
 
-    <a href="index.html">Zur&uuml;ck</a>
-</content>
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze
+        </footer>
 
-<footer>
-    <hr />
-    Made with ❤️ without JavaScript| Kotlog | Tobias Scholze
-</footer>
-
-</html>
+        </html>
