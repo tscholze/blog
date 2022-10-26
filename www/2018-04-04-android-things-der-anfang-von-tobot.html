@@ -1,0 +1,83 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog2018-04-04-android-things-der-anfang-von-tobot.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog2018-04-04-android-things-der-anfang-von-tobot.html.png">
+          <meta property="og:title" content="Der Anfang von ToboT mit Android Things">
+          <meta property="og:description" content="">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Der Anfang von ToboT mit Android Things</h1>
+                
+                <p>Wie schon öfters hier im Blog erwähnt beschäftige ich mich aus Spaß an der Freunde in meiner Freizeit mit Googles <a href="https://developer.android.com/things/index.html">Android Things</a>, also der Variante des mobilen Betriebssystems für Internet-of-Things Geräte. So basiert zum Beispiel mein <a href="https://github.com/tscholze/java-android-things-firebase-pager">Firebase Pager</a> ebenfalls auf einer Android Things Developer Preview.</p>
+<p>Da es aber doch irgendwann eintönig wird immer nur nicht greifbare Software zu schreiben, werkle ich gerade an einem kleinen Vehicle welches auf dem <a href="https://shop.pimoroni.de/products/sts-pi">Pimoroni STS-Pi Kit</a> als auch einem Raspberry Pi mit aufgesteckten <a href="https://shop.pimoroni.de/products/explorer-hat">Explorer HAT</a> aus dem gleichen Hause basiert. Natürlich kommt hier nicht das “empfohlene” Raspbian zum Einsatz sondern wie sicherlich schon vermutet ebenfalls Android Things.</p>
+<p>Getauft hab ich den kleinen Kerl “ToboT” (<a href="https://github.com/tscholze/java-android-things-tobot">Github</a>) – da dieser noch viel mehr werden soll als nur ein ferngesteuertes Irgendetwas.</p>
+<p><img src="assets/java-android-tobot-1.jpg" alt="" /></p>
+<p>Dieses Projekt hat keine feste Roadmap als auch keine feste Zeiten, es soll mir einfach wieder meine fast Lieblingssprache Java näher bringen und vor allem, es soll einfach ein entspanntes Hacken in der Freizeit sein – ach wie schön.</p>
+<h3>Bereits erfolgte Schritte</h3>
+<p><strong>Erstellen eines einfachen Managers zur Ansteuerung der Motoren</strong></p>
+<p>Als ich anfing waren mir Begriffe wie GPIO, oder PWM völlig unbekannt und bescherten mir doch die ein oder anderen Kopfschmerzen. Wohl deswegen, war ich umso stolzer als ich einen kleinen, simplen, jedoch ausreichenden Manager (<a href="https://github.com/tscholze/java-android-things-tobot/blob/master/app/src/main/java/io/github/tscholze/tobbot/managers/MovementManager.java">Github</a>) geschrieben habe, der durch Ansteuerung der GPIO-Pins des Explorer HATs mein Vehikel vor, zurück, links, rechts und – lesson Learned – auch wieder anhalten lässt. Yeah!</p>
+<p>Da ich absolut keine Erfahrungswerte hatte, habe ich mich an der Python Implementierung eines solchen Helferlein von einem <a href="https://www.survivingwithandroid.com/2017/12/android-things-gpio-pins-build-a-controlled-car.html">Blogbeitrag</a> des Authors <a href="https://www.survivingwithandroid.com/author/francesco-azzolagmail-com" title="Posts by Francesco Azzola">Francesco Azzola</a> orientiert.</p>
+<p>Als besonders hilfreich um zu wissen was ich überhaupt ansteuern muss, empfand ich eine Schemazeichnung, in einem <a href="https://docs.microsoft.com/en-us/windows/iot-core/learn-about-hardware/pinmappings/pinmappingsrpi">Erklärbeitrag</a> von Microsoft rund um deren IoT Betriebssystem, um mit den vielen verschiedenen Namen der Pins auf einem Raspberry Pi klar zu kommen.</p>
+<p>Um weitere hardwarenäheren Interaktionsmöglichkeiten, wie die kapazitiven Knöpfe des Explorer HATs, mit einbeziehen zu können konnte ich mich an den wirklich massenhaft vorhandenen offiziellen Beispielsprojekten von <a href="https://github.com/androidthings?utf8=✓&amp;q=sample&amp;type=&amp;language=">Android Things auf Github</a> orientieren. Dort ist wirklich für jeden naheliegenden Anwendungsfall etwas dabei.</p>
+<p><img src="assets/java-android-tobot-2.jpg" alt="" /></p>
+<p><strong>Fernsteuerung via integrierten Webserver</strong></p>
+<p>Ich experimentierte erst mit der wirklich toll funktionierenden <a href="https://developers.google.com/nearby/">Nearby API von Google</a> um mit einem anderen Device mein ToboT fernsteuern zu können. Dies fühlte sich dennoch nicht wirklich dem Anwendungsszenario passend an. Da ich vor allem erstmal die Komplexität niedrig halten wollte als auch es möglich einfach für mich gestallten wollte weitere Software andocken zu können habe ich mich dann dagegen entschieden.</p>
+<p>Nach vielen hilfreichen Tipps aus der Android Things <a href="https://plus.google.com/communities/107507328426910012281">Google Plus Community</a> habe ich mich für einen integrierten Webserver entschieden. Hierbei viel schlussendlich meine Wahl auf den <a href="https://github.com/NanoHttpd/nanohttpd">nanoHttpd</a>. Dieser ultrakompakte Webserver lässt sich einfach als Gradle Dependency einfügen und ist mit wenigen Zeilen Quelltext auch einsatzbereit.</p>
+<p>Was hierbei auf den ersten Blick etwas beschränkend wirkt ist, dass man kein “Directory served” sondern immer nur auf einem Request arbeitet. Man also selber eventuell verschiedene Dateien je nach Request vorbereiten ausspielen muss. Dafür lässt es den Raspberry Pi einfach vollkommen kalt – im wahrsten Sinn des Wortes.</p>
+<p>Da ich kein Webentwickler bin und auch nun wirklich keiner werden möchte habe ich mich als Oberflächenhelferlein für die Webseite, welche als universelle Fernbedienung dienen soll, für das “<a href="https://getmdl.io">Material Design Lite</a>” entschieden. Einfache, responsive Oberflächenelemente im der Material Design Gestaltungssprache.</p>
+<p><img src="assets/java-android-tobot-3.jpg" alt="" /></p>
+<h3>Geplante, weitere Schritte</h3>
+<p><strong>Fernsteuerung mittels Firebase</strong></p>
+<p>Da ich mit meinem <a href="https://github.com/tscholze/java-android-things-firebase-pager">Firebase Pager</a> bereits gemerkt habe, wie verlockend einfach <a href="https://firebase.google.com/docs/database/">Firebase Realtime Database</a> (FRD) als auch <a href="https://firebase.google.com/docs/database/">Firebase Cloud Messaging</a> (FCM) in Applikationen integriert werden können möchte ich dieses Feature natürlich auch für ToboT nutzen. Wenn also ich nun das Vehikel beispielsweise mittels Update-Listender auf einer FRD fernsteuern lasse, kann ich das Gerät auch theoretisch einfach wieder zum Ausgangspunkt zurückfahren lassen.</p>
+<p>Ob FCM auch genügend Realtime wäre müsste man ausprobieren – aber hey, experimentieren macht doch Spaß!</p>
+<p><strong>Objekterkennung</strong></p>
+<p>Dieser Schritt soll der Anfang sein, ToboT autonom fahren zu lassen – in diesem Fall zu mindestens gegen nichts im Weg stehendes fahren zu lassen. Hierfür ist bereits ein Pi Camera Kit verbaut nur noch nicht wirklich angebunden. Laut den Google Computing Platform Regeln darf ich als Deutscher leider diesen Service nicht als Privatperson nutzen. :'(.</p>
+<p>Hierbei könnten dann die <a href="https://azure.microsoft.com/de-de/services/cognitive-services/">Cognitive Services von Microsoft</a> etwaig eine Alternative sein. Falls jemand zu dieser Thematik mehr oder anderes Wissen hat, bitte via Twitter zu <a href="http://twitter.com/tobonaut">@tobonaut</a> melden!</p>
+<p><strong>Dem Vehicle ein Gesicht verpassen</strong></p>
+<p>Android Things App sind in vielerlei Hinsicht normale Android Apps. Somit können diese auch eine native Oberfläche anzeigen. All dies ist relativ problemlos auch inklusive berührungsempfindlicher Steuern mittels Touchscreen lösbar. Auf diesem Display soll irgendwann Informationen rund um den Zustand des ToboT dargestellt werden. Idealerweise als illustriertes paar Augen welches beispielsweise durch den oben genannten Punkt “Objekterkennung” den Benutzer erkennt, sich freu (Änderung der Augenanimation) und sich zu diesem hinbewegt.</p>
+<p><strong>und noch so viel mehr …</strong></p>
+<p>Wenn das Hacken an Freizeitprojekten Spaß macht, gibt es wohl wirklich einfach keine Grenzen. 🙂</p>
+<h3>Rückschläge</h3>
+<p><strong>LEGO Gehäuse ist zu schwer und zu instabil</strong></p>
+<p>Um neben dem STS-Pi Kit auch noch ein Display und mehrer Akkupackete zu beherbergen habe ich mich an einem aus LEGO Bausteinen bestehendes Gehäuse versucht. Leider musste ich erstens feststellen, dass man bei LEGO nahezu keine “nur Steineboxen” mehr kaufen kann – wer will denn bitte Star Wars wenn man einfach 1000 Platten, Steine und Verbinder haben kann!</p>
+<p>Andererseits es sich nicht wirklich passend an das STS-Kit anbauen lässt damit es das Gewicht mit genügend struktureller Integrität halten kann.</p>
+<p>Sehr schade. Hier muss wohl dich wieder der 3D-Drucker ran.</p>
+<p><img src="assets/java-android-tobot-4.jpg" alt="" /></p>
+<p><strong>Es werden noch etliche folgen …</strong></p>
+<p>… da bin ich mir sicher – genau so wie auch noch viele glückliche, stolze und lustige Abenteuer bei diesem Projekt auf mich warten</p>
+<h3>Danke!</h3>
+<p>Merci an all die Leute die mir, trotz das ich blutiger Anfänger war und auch noch bin mir geholfen haben mit den noch so einfachsten Dingen. Merci an die super <a href="https://plus.google.com/communities/107507328426910012281">Google Plus Community</a> (englischsprachig) von Android Things, merci an die beiden deutschen Googler <a href="https://twitter.com/SeraAndroid">Tim Messerschmidt</a> und <a href="https://twitter.com/dirkprimbs">Dirk Primbs</a> die mir wieder meinen Spirit am Development zurückgebracht haben als auch tolle Talks (<a href="https://www.youtube.com/watch?v=0IY6J5baAj8">z.B. zu Flutter</a>) halten.</p>
+<p><strong>PS:</strong></p>
+<p>Falls irgendwer von euch eine offizielle Quelle oder Shop für Merci rund um Android Things und Flutter kennt, bitte melden. Da ist noch blankes Alu auf meinem MacBook sichtbar. xD</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze
+        </footer>
+
+        </html>

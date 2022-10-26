@@ -1,0 +1,91 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog2019-07-06-apache-tapestry-projekt-im-jahre-2019-mittels-maven-erstellen.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog2019-07-06-apache-tapestry-projekt-im-jahre-2019-mittels-maven-erstellen.html.png">
+          <meta property="og:title" content="Apache Tapestry Projekt im Jahre 2019 mittels Maven erstellen">
+          <meta property="og:description" content="">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Apache Tapestry Projekt im Jahre 2019 mittels Maven erstellen</h1>
+                
+                <p><strong>tl;dr</strong></p>
+<p>Die Getting-Started Guidelines sind nicht mehr aktuell als auch andere Quellen veraltet sind. Diesmal <a href="https://stackoverflow.com/questions/56908827/cannot-execute-maven-goal-to-build-tapestry-5-4-x-from-getting-started-guide-nor">nicht durch Stackoverflow</a> sondern dank <strong>Andreas Ernst</strong> von der offiziellen Mailing Liste konnte ich eine Lösung finden.</p>
+<p><img src="assets/java-tapestry-console-1.png" alt="Tapestry Start" /></p>
+<p><strong>Hintergrund</strong><br />
+Apache Tapestry ist ein “ur”-altes Web Framework welches ich im Jahre 2012 zum ersten – und letzten Mal <a href="https://tscholze.uber.space/2012/03/02/ein-gefuehl-von-vater-sein/">einsetzte</a>. Da es mir damals leicht für den Einstieg vorkam wollte ich es nun einmal wieder ausgraben.</p>
+<p><strong>Ausgangslage</strong><br />
+Ich konnte weder mit dem offiziellen Getting-Started Guide noch mit dem verlinkten<a href="https://github.com/bobharner/tapestry5-hotel-booking"> Beispiel zu “Hotel Booking”</a> Tapestry via Maven nicht zum bauen beziehungsweise ausführen bringen.</p>
+<p><strong>Lokale Versionen</strong></p>
+<pre><code>$ mvn --version
+Apache Maven 3.6.0 (97c98ec64a1fdfee7767ce5ffb20918da4f719f3; 2018-10-24T20:41:47+02:00)
+Maven home: C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.0\bin\..
+Java version: 1.8.0_191, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk1.8.0_191\jre
+Default locale: en_US, platform encoding: Cp1252
+OS name: &quot;windows 10&quot;, version: &quot;10.0&quot;, arch: &quot;amd64&quot;, family: &quot;windows&quot;
+</code></pre>
+<p><strong>Getting started&quot;-Fehler</strong></p>
+<pre><code>[ERROR] Failed to execute goal org.apache.maven.plugins:maven-archetype-plugin:3.0.1:generate (default-cli) on project standalone-pom: 
+org .apache.maven.archetype.exception.ArchetypeGenerationFailure: Error merging velocity templates: 
+Lexical error,   Encountered: &quot;\ufffd&quot; (65533), after : &quot;&quot; at 
+archetype-resources/src/main/webapp/mybootstrap/fonts/glyphicons-halflings-regular.eot[line 16, column 21] -&gt; [Help 1]
+</code></pre>
+<p><strong>Hotel booking&quot;-Fehler</strong></p>
+<pre><code>[ERROR] /C:/Users/tobia/IdeaProjects/tapestry5-hotel-booking/src/main/java/com/tap5/hotelbooking/services/BasicAuthenticator.java:[87,13] try-with-resources is not supported in -source 1.5
+</code></pre>
+<p><strong>Lösung</strong><br />
+Nach etlichen hin und her so wie dem asuprobieren verschiedener, offizieller Beispielprojekten wurde ich auf der Mailing Liste auf den korrekten Maven Befehl hingewiesen. Mit diesem funktionierte es so gescheimdig wie vor fast 10 Jahren.</p>
+<p><strong>Funktioniernde Terminal Befehle:</strong></p>
+<p>Batch mode (nicht interaktiv):</p>
+<pre><code>mvn org.apache.maven.plugins:maven-archetype-plugin:2.4:generate \
+    -DarchetypeGroupId=org.apache.tapestry \
+    -DarchetypeArtifactId=quickstart \
+    -DarchetypeVersion=5.4.4 \
+    -DarchetypeRepository=local \
+    -DgroupId={…} \
+    -DartifactId={…} \
+    -Dversion={…}} \
+    -Dpackage={…} \
+    -Darchetype.interactive=false \
+    --batch-mode
+</code></pre>
+<p>Interaktiv:</p>
+<pre><code>mvn org.apache.maven.plugins:maven-archetype-plugin:2.4:generate \
+     -DarchetypeGroupId=org.apache.tapestry \
+     -DarchetypeArtifactId=quickstart \
+     -DarchetypeVersion=5.4.4 \
+     -DarchetypeRepository=local 
+</code></pre>
+<p><strong>Man sollte nicht vergessen</strong><br />
+Natürlich muss man hier erwähnen, dass das Projekt auf Bootstrap 3 setzt und auch sonst, wirklich nicht mehr hip ist – dafür fühlt man sich “daheim”.</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze
+        </footer>
+
+        </html>
