@@ -1,0 +1,86 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2023-01-22-experiment-one-compose-ui-for-android-and-ios.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2023-01-22-experiment-one-compose-ui-for-android-and-ios.html.png">
+          <meta property="og:title" content="Experiment: One Compose UI for Android and iOS">
+          <meta property="og:description" content="Would be a shared ui between iOs, Android and Desktop a great idea? Let's test!">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Experiment: One Compose UI for Android and iOS</h1>
+                
+                <p>I am not an Android guy, I do not like all the hoops Android developer has to go with all the variations of devices out there.</p>
+<p>Yet, there is always a &quot;but&quot; and the &quot;but&quot; in this case is productivity and sharing of available work force between departments. In the case of a shared UI based on Jetpack Compose it would be the freely moving developers from the Android and iOS side.</p>
+<h2>New playground!</h2>
+<p>To get myself into all of these related topics such as Kotlin, Kotlin Mobile Multiplatform, Jetpack Compose, Gradle I started a sample project in which I can play around.</p>
+<p>The sample simply called <em>CMP Sample</em> which is in my speak the short form of <strong>C</strong>ompose <strong>M</strong>ulti <strong>P</strong>latform is a playground to check which hoops and loops I have to go. And boy, there are plenty of them - especially for a beginner!</p>
+<p><img src="https://github.com/tscholze/kotlin-kmm-compose-sample/blob/main/docs/v001-min.png?raw=true" alt="Version 0.0.1" title="Version 0.0.1" /></p>
+<h2>What it's not</h2>
+<p>This is no production ready source. This will be never released as an app store app. This is - as the name suggests - a playground of an absolutely beginner! I really hope my skillset will grow along my journey, but for now, it is better to be motivated by this project to get into shared Compose ui, than take it as a &quot;it has to be that way&quot;.</p>
+<p>Nevertheless, the tech stack it self it far away from beeing ready for production, too.</p>
+<h2>(Planned) features</h2>
+<h3>Setup</h3>
+<ul>
+<li>[x] Setup shared ui <code>:shared:commonMain</code> to contain Jetpack Compose ui</li>
+<li>[x] Setup <code>:shared:androidMain</code> to containerizes and use <code>:shared:commonMain</code> ui</li>
+<li>[x] Setup <code>:shared:iOSMain</code> to containerizes and use <code>:shared:commonMain</code> ui</li>
+<li>[x] Setup a new <code>:desktopApp</code> that must use shared ui</li>
+<li>[x] Strip down <code>:androidApp</code> to use shared ui</li>
+<li>[x] Strip down <code>:iOSApp</code> app to use shared ui</li>
+<li>[x] Get rid of <code>:iOSApp</code> build log flodding</li>
+</ul>
+<h3>UI</h3>
+<ul>
+<li>[ ] Create a fake but real world example of an app ui</li>
+<li>[ ] Evaluate how the translation from Android JPC controls like <code>BottomBar</code> works in iOS</li>
+<li>[ ] Evaluate how it would be possible to create &quot;custom&quot; ui for each platform but use it in <code>:shared:commonMain</code></li>
+</ul>
+<h3>Shared functionality</h3>
+<ul>
+<li>[ ] Evaluate how to use features like pushes</li>
+<li>[ ] Evaluate best practices for logging and crash statistics</li>
+</ul>
+<h3>Instruments (Performance check)</h3>
+<ul>
+<li>[ ] Check how's the memory consumption</li>
+<li>[ ] Check if there is no memory leakage</li>
+</ul>
+<h3>and a lot more</h3>
+<p>I think the features will grow and shrink and grow again as I walk my way through this new experiment of developing mobile applications.</p>
+<h2>Special thanks to</h2>
+<p>to be clear, I would not get this &quot;far&quot; without the help of Kotlin, KMM and Compose giants like <a href="https://github.com/bitspittle">David Herman</a> and <a href="https://github.com/charlee-dev">Adrian Witaszak</a>. It is awesome to read their ideas, to study their source code to get a better understanding in a rapidly changing technology.</p>
+<h2>Get in touch</h2>
+<p>If you wanna talk about Kotlin, KMM, Shared Compose UI, Jetpack Compose pr Jetpack Compose for Web, I would highly recommend to join David's tiny but <a href="https://discord.com/invite/5NZ2GKV5Cs">awesome Discord server</a> for his awesome CfW-enhancing web framework called <a href="https://kobweb.varabyte.com">Kobweb</a>. I never meet such brilliant folks that are not too &quot;good&quot; to help beginners.</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>
