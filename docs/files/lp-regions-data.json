@@ -319,7 +319,7 @@
     "name": "Berlin",
     "lat": "52,50697",
     "long": "13,2843078",
-    "inhabitants": "3.769.495",
+    "inhabitants": "3.769.495,
     "leader": "Franziska Giffey",
     "area": 892
   },
@@ -877,7 +877,7 @@
     "name": "Bayern",
     "lat": "48,1391",
     "long": "11,5802",
-    "inhabitants": "1.539.740",
+    "inhabitants": 1.539.740,
     "leader": "Dieter Reiter",
     "area": 311
   },
@@ -2740,7 +2740,7 @@
     "name": "Nordrhein-Westfalen",
     "lat": "50,9405",
     "long": "6,9599",
-    "inhabitants": "1.017.155",
+    "inhabitants": 1.017.155,
     "leader": "Henriette Reker",
     "area": 405
   },
