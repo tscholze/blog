@@ -1,0 +1,87 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2023-06-19-kennzeichner-3.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2023-06-19-kennzeichner-3.html.png">
+          <meta property="og:title" content="Devlog #2 Kennzeichner - Let us start with the shared core">
+          <meta property="og:description" content="One of the biggest advantages of KMM is the shared core between all consuming apps.">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Devlog #2 Kennzeichner - Let us start with the shared core</h1>
+                
+                <p>Now we are finally getting started. We are starting with the development of the app. For the time being, this is divided into three PoCs - proofs of concepts. The first of these is the so-called shared core. This is the module that will be shared between the two apps in the future. The Android app will then be developed, and last but not least, iOS.</p>
+<p>For all those who are still unfamiliar with this series of articles - you've missed it so far, but you can of course read up on it later:</p>
+<ul>
+<li>Developer's Diary: <a href="https://tscholze.github.io/blog/2023-06-19-kennzeichner-1.html">Kennzeichner #1 using Bing AI chat as data basis</a></li>
+<li>Developer diary #2: <a href="hhttps://tscholze.github.io/blog/2023-06-19-kennzeichner-2.html">Excel can do geography and doesn't like Berlin</a></li>
+<li>(current) Developer Diary #3: Shared Core - The Core of the Whole</li>
+</ul>
+<h2>Explanation of terms</h2>
+<p>Terms and abbreviations are constantly dropped during the diary entries, which can quickly become a jumble in the learning process of the new technology stack. It is still difficult for me to explain all of this precisely, but in general KMM can be divided into three sub-areas. The article's comments are open for any corrections.</p>
+<h3>Kotlin</h3>
+<p>... is a platform-independent and open source <a href="https://kotlinlang.org/">programming language from JetBrains,</a> which is translated into bytecode for the JVM (Java Virtual Machine) similar to Java. Other languages for the JVM would be for example Groovy or Scala. It is de facto the language in which modern Android apps are developed, among other things. Kotlin to Java can be seen in the same relationship as Swift to Objective C.</p>
+<h3>KMM</h3>
+<p>... stands for <a href="https://kotlinlang.org/lp/mobile/">Kotlin Mobile Multiplatform</a> and means developing a common core of apps that run on different operating systems like Android or iOS. Throughout this series of articles, I will refer to the different components of a KMM project as &quot;:shared&quot; for the core, &quot;:android&quot; and &quot;:ios&quot; for the respective native apps.</p>
+<p>In the structuring of KMM architectures, there is no hard limit to when it becomes platform-specific code and when it does not. To keep our entry into KMM simple, we make the cut at &quot;data acquisition&quot; and everything above that is developed per app. Here's how we lean on the second diagram in the chart below.</p>
+<p><a href="https://www.drwindows.de/news/wp-content/uploads/2024/04/Group-3.png"><img src="https://www.drwindows.de/news/wp-content/uploads/2024/04/Group-3.png" alt="KMM Diagram" /></a></p>
+<p>Through CMP (Compose Multiplatform), even the interface could be shared. This exciting approach has only just left the &quot;experimental&quot; phase and is in an alpha state at the time of this article. This would then make it possible to build websites using Compose. A feature I sorely miss in .NET MAUI.</p>
+<h3>Ktor</h3>
+<p>... this <a href="https://ktor.io/">library</a>, maintained by JetBrains and developed in Kotlin, makes it possible to develop modern, lightweight and above all platform-independent http servers and clients. For the identifier, in addition to the client side of the framework, we also use its features around JSON deseralization and mapping.</p>
+<h3>Gradle</h3>
+<p>... is the standard build management tooling behind modern Kotlin apps. Not only is it dependency management, but it can also handle a wide variety of tasks during the development of JVM-based apps. The obvious tasks would be building the actual app, embedding the split core, or even signing to ensure the file created is pristine. A key starting point to understand what dependencies or features are enabled on the part of Gradle is the respective module file <a href="https://github.com/tscholze/kotlin-kmm-kennzeichner/blob/main/app/shared/build.gradle.kts"><em>build.gradle.kts</em></a>.</p>
+<h3>Summary</h3>
+<p>Thus, our app identifier will be a KMM application written in Kotlin, which submits and processes web requests through Ktor. Gradle is used as the build chain tooling.</p>
+<p>I will explain terms that will be used later in our tinkering in the following posts in this series.</p>
+<h2>The core of the whole thing</h2>
+<p>The cornerstone is the module &quot;shared&quot;, which contains the data acquisition, its processing and the state management. This in turn is subsequently integrated by the individual apps. This means that we only have to write the logic once. This also helps to ensure that both apps behave in the same way and have no differences in data management.</p>
+<h3>Data retrieval</h3>
+<p>In the last post, we created the JSON file and put it on a GitHub Page so we can now grab it from within our repository (<em><a href="https://github.com/tscholze/kotlin-kmm-kennzeichner/blob/main/app/shared/src/commonMain/kotlin/io/github/tscholze/kennzeichner/data/LicensePlateRepository.kt">LicensePlateRepository.kt</a></em>). A pure storage in Git and integration via GitHub link fails, because here no corresponding Http headers are set and the app could not use it.</p>
+<p>Here, we don't have to reinvent the wheel and can fall back on proven frameworks from the Kotlin ecosystem. On the one hand, there is the &quot;Ktor&quot; framework, which takes care of the entire network communication up to the validation of the received data streams. On the other hand, the <a href="https://github.com/Kotlin/kotlinx.coroutines">coroutines of KotlinX</a> (Kotlin eXtensions) also find use in the marker app.</p>
+<p><a href="https://www.drwindows.de/news/wp-content/uploads/2024/04/carbon-4.png"><img src="https://www.drwindows.de/news/wp-content/uploads/2024/04/carbon-4-1024x428.png" alt="" /></a></p>
+<p>As you can see, the program code is so far only designed for the happy path and still lacks any error handling in case of a server problem or a client-side incident, such as when the user is not connected to the Internet.</p>
+<p>The list of dependencies will probably grow steadily as development progresses. Nevertheless, I try to reduce it to the minimum here and if really necessary, then fall back on well-known representatives of the respective libraries.</p>
+<p>A good learning was that for multiplatform several http engines are needed, since none of them supports iOS and Android simultaneously, for example. I solved this by using an expect/actual implementation of the HttpClient factory. On iOS, the &quot;Darwin&quot; engine is used and Android uses &quot;CIO&quot;.</p>
+<h3>Data preparation</h3>
+<p>Since I deliberately kept the DTO (<a href="https://en.wikipedia.org/wiki/Data_transfer_object">Data-Transfer-Objects</a>), i.e. the data that the server sends, dumb, a preparation step is interposed. In this so-called mapping from DTOs to DMs (<a href="https://en.wikipedia.org/wiki/Business_object">Domain Model</a>), data is grouped, validated and also converted between types according to the intended use.</p>
+<p>All of this is done with the idea of making it as convenient as possible for the apps to display the data, rather than adding extra work in terms of data hygiene. When developing for multiplatform apps that have native interface subprojects, it is important that Android and iOS developers feel comfortable and at home using the shared component. There will be extra sprints focused on this in the future.</p>
+<p><a href="https://www.drwindows.de/news/wp-content/uploads/2024/04/carbon-5.png"><img src="https://www.drwindows.de/news/wp-content/uploads/2024/04/carbon-5.png" alt="" /></a></p>
+<h2>Data State Management</h2>
+<p>In the first step this is implemented in a very rudimentary way. The repository in the shared module contains a list of already loaded and prepared data objects. Since the data does not really change, the first step is to check in a simple way if the list is empty. If yes, load data, otherwise the already existing data sets should be used. If in the future the API becomes more dynamic, this logic needs to be extended, for example, with a &quot;last updated&quot; hint.</p>
+<p>One feature of the app is filtering loaded data. This also takes place within the shared repository. Here, in the future, we can expect to switch from simple lists to flows, data streams, to listen at various points for filtering, sorting, or other reasons why the indicators to be displayed change.</p>
+<h2>Upcoming steps</h2>
+<p>The next step is to develop the first version, the proof of concept, of both native apps that will incorporate the shared core that has now been created. Once these two milestones are also taken off the marker, it's on to the polishing, the documentation and the nice little things that the app should have. These include, for example, Surface Duo support for Android or the integration of voice assistants in general, so that license plates can be found by voice alone.</p>
+<p>If you have any open questions about contributing to the app, email me at <a href="https://www.drwindows.de/cdn-cgi/l/email-protection#24504b464d4557644056534d4a404b53570a4041">[email protected]</a> or create an issue right now on <a href="https://github.com/tscholze/kotlin-kmm-kennzeichner">GitHub, where the complete source code of the app is</a>.</p>
+<p>Let's continue to work together on this exciting tinkering project. Thank you for your continued interest in this nerdiness.</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>

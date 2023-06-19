@@ -1,0 +1,65 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2023-06-19-kennzeichner-1.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2023-06-19-kennzeichner-1.html.png">
+          <meta property="og:title" content="Devlog #1 Kennzeichner - Bing AI chat as a data source">
+          <meta property="og:description" content="Is it feasable to use Bing AI chat as a data source for public available information?">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Devlog #1 Kennzeichner - Bing AI chat as a data source</h1>
+                
+                <p>I have often started new crafting projects. Some could be completed, others like our <a href="https://www.drwindows.de/news/duobahn-das-entwicklertagebuch-teil-5-alles-ohne-google-wieder-auf-anfang">&quot;DuoBahn&quot;-</a>App remained unfinished due to external influences like wars. The beauty of such projects is that this is perfectly, okay! So let's start a new one!</p>
+<h2>Hello, new tinkering</h2>
+<p>I don't want to reveal too much about our next app yet, just two facts to mention. The name of the app will be &quot;<a href="https://github.com/tscholze/kotlin-kmm-kennzeichner">identifier</a>&quot; and we have to gather the data base for this ourselves. A stroke of luck for this is on paper that all the information needed for this would have to be usable under &quot;Open Data&quot; i.e. as &quot;freely available data&quot;.</p>
+<h2>This is the goal</h2>
+<p>The app Kennzeichner should enable the user to assign a license plate to a city or region on the basis of the area identifier. For a search for &quot;A&quot;, &quot;Augsburg&quot; would appear, but also &quot;Aalen&quot;, since the identifier &quot;AA&quot; is used for this. Metainformation about the respective regions in Germany should contribute to a certain added value. Which these are has not yet been determined. Furthermore, this app, with what appears at first glance to be a simple usage scenario, is also intended to sound out the experiments for possible extensions such as a voice-based search. Thus, it is difficult to determine the &quot;final&quot; goal of the app. Rather, they are steps in a certain direction, with which I want to learn a lot, but also celebrate quick successes without having to build weekend after weekend on a feature.</p>
+<h2>KMM – Kotlin Multiplatform Mobile</h2>
+<p>Unusually for a Microsoft-related portal, this app is built on the <a href="https://kotlinlang.org/lp/mobile/">Kotlin Multiplatform Mobile</a>, or KMM, approach in the first stage. No Xamarin, no <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/hybrid/?view=aspnetcore-7.0">Blazor Hybrid</a>, no .NET <a href="https://learn.microsoft.com/de-de/dotnet/maui/what-is-maui?view=net-maui-7.0">MAUI</a>. There will be more explanation on the reasons in future articles as I get further into the subject of KMM. At the moment I can only say that the quality of .NET MAUI until the end of last year, also concerning the VS for Mac support, did not exactly suggest me to use this tech stack consisting of C#, XAML and the MAUI framework.</p>
+<p>Whether MAUI might have been the better choice after all, we will probably know at the end of the journey with this tinkering project. A big plus point, which MAUI stands for, is the possibility of only having to write the app interface once in order to be able to use it on all platforms. One approach to this from the Kotlin ecosystem would be &quot;Compose Multiplatform&quot;. For this I have privately <a href="https://github.com/tscholze/kotlin-kmm-compose-sample">programmed an example</a>. At a later point in the project, I will re-evaluate whether I want to work with platform-specific interfaces or with a split one - despite the possible disadvantages.</p>
+<h3>Microsoft is still present</h3>
+<p>Still, Microsoft is broadly represented in the developer universe. Of course, the Android app will be made fit for the Surface Duo, if it still exists by then. Even without the Duo, products from Redmond can still be found. On the one hand <a href="https://github.com/tscholze/kotlin-kmm-kennzeichner">GitHub</a> for source code and ticket management and possibly <a href="https://appcenter.ms/">Microsoft App Center</a> for possible distribution of Android test versions. Whether the app will use <a href="https://github.com/microsoft/fluentui-android">FluentUI from Microsoft</a> is largely up to how far Jetpack Compose and SwiftUI support has progressed by the time we get to that point per se.</p>
+<h2>Bing AI as data basis</h2>
+<p>As mentioned above, the app needs a certain data base, which, according to my research, does not yet exist. I am looking for all currently used license plates, their region as well as their geographical location. In addition, optional meta information about the license plate region should be provided. In my eyes, this is a perfect hook to get involved with Bing AI Chat.</p>
+<p>The beginnings of my conversation with the AI were very promising. Bing understood my concerns, asked specific follow-up questions, even offered to create an Excel spreadsheet from the data and send it to my email address on file. I was impressed and also excited - but then everything ended differently than expected.</p>
+<p>Although Bing assured me that it would send me a message, it never arrived. To investigate this, I asked Bing what address it was sending the list to and how much memory it was using. This allowed me to rule out a problem with incorrect spam mapping or an email address that was not stored correctly.</p>
+<p>During further attempts, my use of AI failed with different problems, which can nevertheless be summarized as &quot;data export error&quot;. A direct output as CSV text in the conversation view was torpedoed, since here the texts were always shortened in the middle by means of &quot;...&quot;, despite request to refrain from this.</p>
+<p>On direct commands to email me the created file, Bing admitted to me that this was not yet possible. These restrictions were confirmed by <a href="https://twitter.com/Ra_Koellner/status/1635002907253952512?s=20">Microsoft expert Raphael Köllner on Twitter</a>. So why did AI offer it to me on the very first run?</p>
+<p>The question remains whether Excel Copilot, which was in closed beta at the time of this article, could have solved this problem better.</p>
+<h3>Bing AI chat prompt expert wanted</h3>
+<p>If you are familiar with AI chat requests and have managed to successfully resolve my issue, please share your prompt with the Dr. Windows community so we can learn together.</p>
+<h2>What's next?</h2>
+<p>The tinkering project can also be run with demo data at the beginning. So this does not block the active development of the app. I will get more familiar with Kotlin and KMM in the coming weeks. The tinkering project can be found as often as <a href="https://github.com/tscholze/kotlin-kmm-kennzeichner">repository on GitHub</a>. I don't ask you to actively participate in the development yet, because I want to explore the framework and the possibilities of my idea first. Nothing is worse than your wasted lifetime. If you want to talk about KMM, Kotlin, Jetpack Compose and Co., feel free to join me on the <a href="https://discord.com/invite/5NZ2GKV5Cs">Discord Server of Kobweb</a> (an essay on Compose for Web).</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>
