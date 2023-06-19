@@ -1,6 +1,6 @@
 ---
-title: 'Devlog #2 Kennzeichner - Let us start with the shared core'
-date: '2023-06-19'
+title: 'Devlog #3 Kennzeichner - Let us start with the shared core'
+date: '2023-06-21'
 abstract: 'One of the biggest advantages of KMM is the shared core between all consuming apps.'
 ---
 
