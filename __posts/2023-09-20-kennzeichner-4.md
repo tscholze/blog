@@ -1,5 +1,5 @@
 ---
-title: 'Devlog #4 - Lets go mobile!'
+title: 'Devlog #4 Kennzeichner - Lets go mobile!'
 abstract: 'Lets create an Android app that consumes the shared core'
 date: '2023-09-20'
 ---
@@ -8,7 +8,7 @@ After we have laid the foundation for the actual mobile applications in the last
 
 For all those who are still unfamiliar with this series of articles - you've missed it so far, but you can of course read up on it later:
 
-* Developer's Diary: [Kennzeichner #1 using Bing AI chat as data basis](https://tscholze.github.io/blog/2023-06-19-kennzeichner-1.html)
+* Developer's Diary: [Using Bing AI chat as data basis](https://tscholze.github.io/blog/2023-06-19-kennzeichner-1.html)
 * Developer's Diary #2: [Excel can do geography and doesn't like Berlin](https://tscholze.github.io/blog/2023-06-19-kennzeichner-2.html)
 * Developer's Diary #3: [Shared Core - The Core of the Whole](https://tscholze.github.io/blog/2023-06-21-kennzeichner-3.html)
 * (current) Developer's Diary #4: Lets go mobile!
