@@ -1,0 +1,87 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2024-03-12-blinky-lights-with-kotlin-native-and-a-raspberry-pi.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2024-03-12-blinky-lights-with-kotlin-native-and-a-raspberry-pi.html.png">
+          <meta property="og:title" content="Blinky lights with Kotlin Native and a Raspberry Pi">
+          <meta property="og:description" content="Using Kotlin Native to let a Pimoroni Blinkt! light up on a Pi via a browser">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Blinky lights with Kotlin Native and a Raspberry Pi</h1>
+                
+                <p>The days are getting shorter and more uncomfortable. This not only means that Christmas is approaching, but that we at Dr. Windows are tinkering again! This time with a Raspberry Pi, glowing LEDs of the <a href="https://shop.pimoroni.com/products/blinkt">Pimoroni Blinkt! HATs</a> and <a href="https://kotlinlang.org/docs/native-overview.html">Kotlin Native</a>.</p>
+<p>The current project can be seen as an imaginary successor to our <a href="https://www.drwindows.de/news/windows-10-iot-core-perfekt-fuer-maker-und-hobbyisten">Windows 10 IoT Core Apps</a>, which we developed several years ago. And all this, even though I don't have the faintest idea.</p>
+<h2>Why no more Microsoft platform?</h2>
+<p>A very legitimate question. Especially since we are on a news site that is rather close to Redmond. To be honest, I would like to continue developing for Windows IoT Core if it still existed. <a href="https://www.drwindows.de/news/microsoft-und-co-haben-keine-lust-mehr-auf-hardwarebastler">Microsoft has let it die on the vine</a>, and in the state it's currently in, I simply can't advise anyone to engage with this operating system or ecosystem in their spare time.</p>
+<h2>Why Kotlin Native?</h2>
+<p>Now that Microsoft has not only discontinued the operating system for the Raspberry Pis, but also recently discontinued Visual Studio for Mac (<a href="https://www.drwindows.de/news/visual-studio-microsoft-stellt-den-ableger-fuer-macos-ein">https://www.drwindows.de/news/visual-studio-microsoft-stellt-den-ableger-fuer-macos-ein</a>), .NET and C# are no longer a path I want to take in the hobby environment. I love the freedom to choose my host operating system and possibly my development environment so that I don't feel constrained. Kotlin and the IDEs from JetBrains run on the Mac as well as on Linux and Windows machines and are also available in free versions for the use case we have in mind.</p>
+<p>Furthermore, for me personally, Kotlin is the language of choice when it comes to platform independence and versatility. Be it app and desktop development with <a href="https://www.jetbrains.com/de-de/lp/compose-multiplatform/">Compose Multiplatform</a>, server things with <a href="https://ktor.io/">Ktor</a> or now also Raspberry Pi with <a href="https://kotlinlang.org/docs/native-overview.html">Kotlin Native</a>.</p>
+<p>This naturally leads to problems of its own, especially if you want to learn this language. Because Kotlin is not the same as Kotlin as far as the range of functions is concerned. This is all the more true if, like us, you want to go the &quot;native&quot; route in this tinkering. There is no JVM, which otherwise conveniently abstracts away the peculiarities of the operating system.</p>
+<p>The plus point is that you can run Kotlin code on platforms that do not have a JVM, such as iOS, or on those that are simply too weak for it, such as older Raspberry Pis and other single-board computers.</p>
+<p>What distinguishes Kotlin Native from standard Kotlin is that, like a C# program, a single executable file is created, which can be viewed like a <em>*.exe</em> under Windows. Of course, like many things in the Kotlin universe, this has a &quot;k&quot; prefix and is called *.kexe - ideal for cookie time in winter.</p>
+<h2>What are we making?</h2>
+<p>We are building a program with which we can control the pixels of the <a href="https://shop.pimoroni.com/products/blinkt?variant=22408658695">Pimoroni Blinkt! HAT</a>s of a Raspberry Pi as an example for later use. Not only hard-wired via source code, but also via a web interface. Instead of just eight pixels, this could also be used to implement Christmas tree lighting. APA102-based lights are also available by the meter.</p>
+<p>In technical terms, we use GPIO to control voltage changes on eight AP102 pixels, each of which controls a red, green and blue LED. For the <em>curl</em>-API or the web interface, we use a web server embedded in the program based on Ktor, which, like Kotlin itself, also comes from JetBrains.</p>
+<p><a href="https://www.drwindows.de/news/wp-content/uploads/2023/11/flow.png"><img src="https://www.drwindows.de/news/wp-content/uploads/2023/11/flow.png" alt="We make blinking lights with the Raspberry Pi and Kotlin Native" /></a></p>
+<p>Unlike back then with our Windows 10 IoT Core apps, this time we have to take care of running and starting the app from our development environment ourselves. This is easier than we thought, as we either have a built-in shell on the host computer if we are using Mac or Linux, or we can retrofit it under Windows with the WSL.</p>
+<p>Thus, a small bash script takes care of building, uploading to the Pi and starting the program. With this simple approach, we lose the ability to stop and examine - i.e. debug - the program running on the mini-computer during execution.</p>
+<p>The source code and an explanatory readme file are stored in the corresponding <a href="https://github.com/tscholze/kotlin-kpi-native-blinkt">GitHub repository</a>. You can see what it looks like in the end in the video at the end of this article.</p>
+<h2>Dependencies used</h2>
+<p>We are not reinventing the wheel, which is why we are relying on the <a href="https://github.com/ktgpio/ktgpio/">Framework KtGpio</a> for this tinkering, which in turn is based on the C libraries that we have to link in the classic way when building the app. It would simply be too much to start from scratch with this type of development. It's the same with <a href="https://ktor.io/">Ktor</a>, which is our library for the web server.</p>
+<p>It's nice when you want to understand and grasp things from the ground up. But I don't think it's worth investing months in order to achieve the actual goal with this fiddling around.</p>
+<p>If you also want to tinker with the Pi but don't want to do without the JVM, we recommend the <a href="https://pi4j.com/">Library Pi4J</a> with the Kotlin DSL plugin.</p>
+<h2>Project structure &amp; important sections</h2>
+<p>As our tinkering is a small program, the project structure is also very simple. In addition to the Main.kt to start the program, there are the self-describing packages &quot;<em>APA102</em>&quot; and &quot;<em>Server</em>&quot;. Communication between the server and the eightfold APA102 controller takes place via a <em><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-mutable-state-flow/">MutableStateFlow</a></em>, which transmits the &quot;commands&quot; one-sided, so to speak.</p>
+<h3>APA102.kt</h3>
+<p>This is the manager (<a href="https://github.com/tscholze/kotlin-kpi-native-blinkt/blob/main/src/nativeMain/kotlin/io/github/tscholze/kblinkt/apa102/APA102.kt">GitHub file</a>), which lights up the lights using GPIO connections. The corresponding pin numbers are defined at the bottom of the Kotlin class as well as the number of pulses required to trigger certain reactions of the chip. This is common practice when you are working &quot;low-level&quot;. There are also the following essential functions for controlling the APA102:</p>
+<h4>writeLedValues()</h4>
+<p>We can change our Kotlin objects as we like, but ultimately we also have to communicate these to the respective APA102 chip. This is done with some bitshifting and the writeByte function for each of the eight available APA102 chips.</p>
+<p>The clock, i.e. the clock pin, must first be locked or unlocked so that the chips accept the desired configuration.</p>
+<h4>SetClockState()</h4>
+<p>By means of an exact number of pulses, we make the chips listen to changes. Depending on the component, this is a different number, in our example it is 36 to lock the clock and 32 to unlock it again. If my understanding is wrong, please correct me in the comments.</p>
+<h4>writeByte(input: Byte)</h4>
+<p>After the chips listen for changes, the actual information can be written as bytes. I did not invent this logic, which is complex for me as a high-level language developer, but took the official <a href="https://github.com/pimoroni/blinkt/blob/master/library/blinkt.py#L49">Pimoroni Python library</a> as a strong inspiration.</p>
+<h3>Server.kt</h3>
+<p>In the actual sense, this is not an independent class (<a href="https://github.com/tscholze/kotlin-kpi-native-blinkt/blob/main/src/nativeMain/kotlin/io/github/tscholze/kblinkt/server/Server.kt">GitHub file</a>), but a function that returns a corresponding interface of a created web server. It can be that simple these days.</p>
+<h4>runServer(actions: MutableSharedFlow<Command>)</h4>
+<p>The function's eponymous task is to start an embedded web server. This listens to port 8080 and offers a <em>GET</em> and several <em>POST</em> requests.</p>
+<p>An example of a <em>POST</em>\ request that contains user-defined content is the one for the &quot;morse&quot; functionality. Here, the &quot;<em>call.receiveText()</em>&quot; method provided by Ktor evaluates the payload provided by the sender, which in our case contains the word to be morse.</p>
+<h4>val template</h4>
+<p>Since we have no access to the resources in Kotlin Native and the data input and output is very complex, I decided to store the web interface as a Kotlin string. This is returned to the requesting browser in <em>GET</em> on &quot;/&quot;.</p>
+<p>So that I can edit the html properly, the template is available as a simple <em>*.html</em> page in the file &quot;<em>index-raw-template.html</em>&quot;, in which the editor can use its full power in terms of syntax highlighting and code completion.</p>
+<h3>Conclusion</h3>
+<p>Getting started with Kotlin Native was very bumpy because it is not JVM-based and, as a beginner, it was often not clear to me during my research whether the function I was looking for was only available in the JVM, in JavaScript or as a native variant.</p>
+<p>Nevertheless, I enjoyed it and it showed me that you don't always have to use Python if you want to have fun with a Raspberry Pi - even if it's getting on in years.</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>
