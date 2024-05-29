@@ -2334,7 +2334,7 @@
     "id": "PW",
     "name": "Pasewalk",
     "lat": 53.5,
-    "long": 14,
+    "long": 14.0,
     "inhabitants": 11545,
     "leader": "Danny Rodewald",
     "area": 55
