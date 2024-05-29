@@ -2601,7 +2601,7 @@
   {
     "id": "RPL",
     "name": "Rheinland-Pfalz",
-    "lat": 50,
+    "lat": 50.0,
     "long": 8.2667,
     "inhabitants": 200957,
     "leader": "Michael Ebling",
