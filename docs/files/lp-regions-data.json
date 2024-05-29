@@ -2306,7 +2306,7 @@
   {
     "id": "PR",
     "name": "Landkreis Prignitz",
-    "lat": 53,
+    "lat": 53.0,
     "long": 11.75,
     "inhabitants": 19023,
     "leader": "Oliver Hermann",
