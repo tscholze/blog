@@ -1096,14 +1096,6 @@
     "area": 183
   },
   {
-    "id": "DEG",
-    "name": "Deggendorf",
-    "lat": 0,
-    "long": 0,
-    "inhabitants": 0,
-    "area": 0
-  },
-  {
     "id": "DEL",
     "name": "Delmenhorst",
     "lat": 53.0506,
