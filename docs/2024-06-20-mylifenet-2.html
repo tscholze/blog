@@ -1,0 +1,68 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2024-06-20-mylifenet-2.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2024-06-20-mylifenet-2.html.png">
+          <meta property="og:title" content="Devlog #2 MyLife.NET - Let's get to the Co">
+          <meta property="og:description" content="A .NET playground app to bring your life to a structure using Blazor, MAUI, Azure and more">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Devlog #2 MyLife.NET - Let's get to the Co</h1>
+                
+                <p>After we clarified the why, how, and what in the first article of this series, the second part deals with literally the core of it all: the subproject <em>MyLife.Core</em>, which contains all the necessary and shared models, functions, and services.</p>
+<h2>Let's be realistic: it's not rocket science</h2>
+<p>As a nerd, software engineer, and maker, one tends to plan things bigger and more complex than initially or even ultimately necessary. I'm certainly no exception here. For this reason, it took me a while to realize that what I have in mind with MyLife.NET (<a href="https://github.com/tscholze/dotnet-mylife">GitHub</a>) can be implemented with the simplest tools of .NET and Visual Studio.</p>
+<p>For me, it's important to have a starting point that is clear and delivers results quickly, as leisure time has become a precious commodity for all of us. That's why proven libraries are used not only in <em>MyLife.Core</em>, but generally in the solution - quite different from my usual mindset of writing everything myself to learn as much as possible. This time, I really want to focus on the result and not so much on the journey - let's see if I can make it happen.</p>
+<h2>Classic models with JSON annotations</h2>
+<p>Since MyLife is my first serious project in the .NET ecosystem in a long time, I initially rely on proven techniques. The data structure of the domain transfer objects (DTO), i.e., the objects that ultimately contain the data structure, is based on C# classes with annotations from the well-known and widely used <a href="https://www.newtonsoft.com/json">NewtonSoft.Json</a> library.</p>
+<p>For now, there is no validation at this level. For a simple start, the <em>JsonProperty</em> annotation is the only use of the library that affects the resulting JSON file. In the future, more functions from this dependency may or may not be used - either way, it's nice to know that if needed, it is a tested and stable feature. Cheers to the mature .NET ecosystem, where in my opinion, there is more stability in the world of dependencies than in other languages and systems.</p>
+<h3>Alternative: record structs</h3>
+<p>In modern C#, there is the feature of &quot;record classes&quot; (<a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record">Microsoft Learn</a>) or record structs, which are set up very similarly to Kotlin data classes and greatly reduce a lot of boilerplate code from traditional class-based writing styles.</p>
+<p>At the time I started with <em>MyLife.Core</em>, I lacked a deeper understanding of these language features, and with regard to editable models in the future, I initially dropped the use of records.</p>
+<h2>Sample data is gold</h2>
+<p>With the <a href="https://github.com/tscholze/dotnet-mylife/blob/main/MyLife.Core/Generator/SampleLife.cs"><em>SampleGenerator.cs</em></a>, I hit several birds with one stone. On the one hand, it describes _my_ life, so I don't have to build the structure twice, and on the other hand, I can use it as a basis for functionality as well as entire upcoming subprojects like Blazor and Co to populate and showcase data from the beginning - as well as, as the name suggests, use it as mock data during the creation of interfaces.</p>
+<p>Smart people would also use such fixed data sets to validate created test runs. Nevertheless, I try to build <em>MyLife.NET</em> in a way that with the simplest change of parameters, one can let their own life flow into the lives of other people.</p>
+<h2>The console as a life generator</h2>
+<p>In the same context as the models, the generator, which is based on the models of the choir, is also based on a simple console application with scattered <em>Console.Write</em> and <em>Console.Read</em> calls.</p>
+<p><a href="https://www.drwindows.de/news/wp-content/uploads/2025/05/mylife-exporter-console-output.png"><img src="https://www.drwindows.de/news/wp-content/uploads/2025/05/mylife-exporter-console-output.png" alt="" /></a></p>
+<p>Of course, you could also build a user interface here, or even do everything on the web - but why? For a simple conversion of the data set into a JSON file on the computer's disk, you don't have to travel around the world just to shop at the nearby supermarket.</p>
+<h3>Why not in MyLife.Core?</h3>
+<p>This user interface for exporting life is not platform-independent, and creating a JSON structure as a file is not a use case that is universally needed.</p>
+<p>For me as a beginner, or for someone who likes to download and start open source code, it's always good to have a main project - i.e., without a suffix in the name - that I can always start and that shows me a certain functionality of the application. That's why the console application is not in a <em>MyLife.Exporter,</em> but, as mentioned, at the top level in the <em>MyLife</em> project.</p>
+<h2>What's next?</h2>
+<p>Now that we can generate a JSON file thanks to <em>MyLife.Core</em> and save it thanks to the exporter, the next step will be towards Blazor Web Assembly to present the data in a more comprehensible way for us humans. Since I have zero knowledge of Blazor as well as the whole story around web development, it probably won't be a perfect solution, but it picks up on the first section again. It doesn't have to be perfect, for the start, I want to show you that it's possible and continuously improve it over the coming weekends.</p>
+<p>If you want to participate because you want to show me how something is done right or easier, or if you want to contribute to a still manageable .NET solution for the first time, you are welcome to visit GitHub, fork the <a href="https://github.com/tscholze/dotnet-mylife/tree/main">repository</a>, open issues with problems or suggestions, or simply browse.
+Nachdem wir im ersten Artikel dieser Serie das wieso, weshalb und warum geklärt haben beschäftigt sich der zweite Teil mit buchstäblich dem Kern des Ganzen: Mit dem Teilprojekt <em>MyLife.Core,</em> welches alle benötigten und geteilten Models, Funktionen und Services enthält.</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>
