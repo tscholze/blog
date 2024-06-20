@@ -1,0 +1,75 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2024-06-20-mylifenet-1.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2024-06-20-mylifenet-1.html.png">
+          <meta property="og:title" content="Devlog #1 MyLife.NET">
+          <meta property="og:description" content="A .NET playground app to bring your life to a structure using Blazor, MAUI, Azure and more">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Devlog #1 MyLife.NET</h1>
+                
+                <p><img src="https://www.drwindows.de/news/wp-content/uploads/2025/05/MyLife.Net-SoMe.png" alt="Developer Diary: MyLife.NET #1 - Why, how, what?" />
+In the infinite depths of the internet, where bits and bytes roam, we nerds often have to deal with our digital persona. We input information, we output it, and sometimes we even summarize it. But why settle for boring tasks? Why not invest three days instead of three times ten minutes and store it all in beautiful, readable data structures? Exactly - nothing is holding us back!</p>
+<h2>.NET - I'm back!</h2>
+<p>After my recent tinkerings were mostly based on Kotlin, we are now back in the .NET ecosystem. The decisive factor, besides the fact that we haven't had it on the agenda for a while, was the possibility to easily integrate various experiments regarding platforms and types of software, thus saving double work when it comes to the foundation of MyLife.NET.
+The return to .NET is also due to the adventurous spirit of every nerd! Wanting to know what one might be missing out on. The introduction of .NET 9 is scheduled for November, as is Microsoft's BUILD 2024 developer conference this month. Both are reasons that motivate us, sometimes only temporarily, to explore certain technologies. Isn't software development a great pastime that never gets boring?</p>
+<h2>Originally, a Life.json was planned</h2>
+<p>As mentioned at the beginning, the first goal was to have a generally usable data structure on the web that includes content about my public life: who I am, an overview of my open source projects, the content I create, and a bit about my professional background. In short: My life as a JSON file on GitHub.
+But should I really write my JSON structure like a caveman from the Stone Age, which is not only tedious but also error-prone? Of course not! So an object structure had to be created, which is then encoded into JSON. Nice and type-safe, and reusable. And so the new MyLife.NET tinkering project began.</p>
+<h2>The structure of life</h2>
+<p>The initial idea behind the first draft of the structure of <a href="https://github.com/tscholze/dotnet-mylife">Life.json</a> is the modularization or contextualization of information. It is of little use to have a collection of key-value pairs that are not grouped to represent their domain. Ultimately, the JSON file should also be readable and understandable by humans. However, a program also appreciates it when only the truly necessary information is pushed through its circuits.
+So the initial idea resulted in the following basic structure:</p>
+<h3>Root</h3>
+<p>In addition to the following domain areas, there is room at the top level for API-specific information, such as the date of the last update, but also versioning, to be able to check before the actual decoding whether the client can make sense of the structure. Additional fields can be added to transmit information such as the language of the content. The latter could become important in the future if one were to think about localization.</p>
+<h3>Persona</h3>
+<p>This area includes all general information about me: name, nicknames I might be known by, the place where I live, a motto, and the like. In the context of domains, this would be a collection of data that could be used for a greeting or a profile.</p>
+<h3>Content Creation</h3>
+<p>The name says it all: a list of information about profiles on various platforms where I am active and make content such as videos, texts, and more publicly accessible. The question arises as to how detailed the information should be. Is a rough overview sufficient, or are the information only valuable when the individual published content could be listed? These are dynamic contents, which Life.json is theoretically not designed for.</p>
+<h3>Open Source</h3>
+<p>My life wouldn't be my life if open source development didn't play a major role. Behind this grouping are data about my biggest GitHub projects, but also, for example, an explanation of my motivation behind my enthusiasm for this hobby. This dataset could be used for a portfolio website.</p>
+<h3>Curriculum Vitae</h3>
+<p>An unfamiliar term, but ultimately it means nothing more than (professional) resume in German. Behind this section in Life.json is a rough overview of my career, education, and other topics that can be found in resumes, but also publicly on LinkedIn or Xing.</p>
+<h2>What's planned next?</h2>
+<p>Since my main goal, a JSON file, has been achieved in the first step, the next steps will be to tackle the two experiments &quot;<a href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor">Blazor Webassembly</a>&quot; and &quot;<a href="https://dotnet.microsoft.com/en-us/apps/maui">MAUI</a>&quot;. Both should display the contents of the life data structure and possibly extend it with additional functionality. Since I am neither a web developer nor a MAUI guru, it will be an exciting and educational journey through the .NET cosmos.
+After that, further ideas have already come up. On the one hand, I came up with the idea of a completely static Blazor website - without any sluggish WebAssembly - as well as throwing the whole thing into Azure to see if the cloud service from Redmond is also suitable for tinkering projects.
+For this series of articles, depending on the subproject of MyLife.NET, one or two articles will be published, starting with the models behind the structure and the encoder as well as its dependencies. Subsequently, publications regarding the Blazor experiment with WebAssembly are planned.</p>
+<h2>Everything is still in flux</h2>
+<p>The data structure of Life.json is still very much in flux. With every use case I come up with, structures have to be adjusted, new fields have to be added, or, if it's good, information has to be reused, which reduces complexity and simplifies getting started with MyLife.NET as well as maintaining the project.
+However, I am already negotiating with myself about how many features should be implemented. For example, should the core component of MyLife.NET offer the possibility to display the content of my YouTube videos, my Medium profiles, or podcasts, or is this already going a step too far? The answer will probably only be revealed by the future.</p>
+<h2>Everything can be found on GitHub</h2>
+<p>As is usual with all our tinkering on Dr. Windows, you can find the current <a href="https://github.com/tscholze/dotnet-mylife">status on GitHub</a>. As you have already learned from the article, everything is still in flux, not intended for commercial use, and simply meant to show the joy of software development with .NET. If I have motivated you to try this out as well, take a look at the source code, give it a try, break things to fix them again. After all, it's our shared fun and not a competition.
+If you have any questions, feel free to ask in the comments, and I will try to incorporate them into future articles in this series.</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>
