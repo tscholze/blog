@@ -1,0 +1,82 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2024-08-05-devlog-3-mylife-net-why-and-what-is-blazor-wasm-.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2024-08-05-devlog-3-mylife-net-why-and-what-is-blazor-wasm-.html.png">
+          <meta property="og:title" content="Devlog #3 MyLife.NET - Why and what is Blazor WASM?">
+          <meta property="og:description" content="Using the magic of .NET and Blazor without needed a server">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Devlog #3 MyLife.NET - Why and what is Blazor WASM?</h1>
+                
+                <h2>Clarification: I am a beginner</h2>
+<p>Like all our tinkering, <em>MyLife.NET</em> (<a href="https://github.com/tscholze/dotnet-mylife">GitHub Repository</a>) is for learning, experimenting and making mistakes. Especially in this article, which is about web development, I would like to explicitly point this out once again. I'm a complete beginner when it comes to things like JavaScript, CSS or even simple HTML, and I've given these topics a wide berth so far - simply because I'm not interested in the subject. I am more at home in areas such as mobile or server development. Nevertheless, I would like to use the development time of MyLife.NET to get a taste of it. I am always open to suggestions for improvement on GitHub and I look forward to learning from you.</p>
+<h2>What is Blazor WASM?</h2>
+<p>First, let's clarify what exactly <a href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor">Microsoft .NET Blazor</a> is.Blazor is an ASP.NET web framework for creating reactive web applications. These websites are made up of so-called Razor components, which have been known for many years. These components can either be individual parts of a page, such as a text field, but can also represent entire pages with URL routing. Since Blazor consists of <em>Razor</em>\ components, this also explains why the file extension *.razor instead of *.blazor seems illogical to me at first glance.</p>
+<p>Since Blazor is part of .NET, it allows developers who want to avoid JavaScript to still be active in web development and use the knowledge they have built up in the C# and . NET ecosystem can also be used here.</p>
+<h3>Interjection: What is WASM?</h3>
+<p>WebAssembly, or <a href="https://developer.mozilla.org/en-US/docs/WebAssembly">WASM</a> for short, is an open web standard with the aim of being able to execute bytecode with almost native performance in the browser and being independent of specific programming languages. In addition to the core implementation in the browser, there are also variants such as Wasmer that do not require a browser.In addition to C# and F#, as addressed in the case of Blazor for .NET, other programming languages such as Rust, Go, Python, TypeScript, Kotlin or C++ can also be considered.WASM is open source and is available at</p>
+<h3>Server or WASM?</h3>
+<p>There are several ways to publish websites created with Blazor: On the one hand, the traditional approach with an active web server in the background, where all logic is executed on remote machines. This type of website provision is the forefather and is also known from PHP, Ruby and Co.In our case, however, we don't want to operate any servers at the beginning and don't actually want to pay anything. For this reason, we need something static. This means that the web server only has to process simple HTTP requests, but is not allowed to actively and dynamically execute any other website logic.</p>
+<p>This restriction allows us to run the corresponding Blazor WASM pages on services such as <a href="https://pages.github.com/">GitHub Pages</a> or Codeberg Pages without having to worry about administration or billing at the end of the month. This means that the client, in our case the browser, has to do the thinking and load the required libraries when the website is visited for the first time, which in turn slows down the initial display of content considerably. For us, however, this is irrelevant for the time being.</p>
+<p>In addition to the point mentioned above, it is also not possible to transfer logics 1:1 from a server-based application to logics running in the browser. This caused confusion during my experiment, which I will discuss later in the article.</p>
+<h2>The beginning of MyLife.Blazor.Wasm</h2>
+<p>Creating the Blazor project within the Visual Studio Solution was easy as it only took a few clicks. The thought process of what type of Blazor template to choose was a more arduous time here. Here it pays off to set the development environment to English - at least for me, the terminology and description texts were then easier to understand.</p>
+<p><a href="https://www.drwindows.de/news/wp-content/uploads/2025/05/Screenshot-2024-05-17-195421.png"><img src="https://www.drwindows.de/news/wp-content/uploads/2025/05/Screenshot-2024-05-17-195421.png" alt="" /></a></p>
+<p>Since I didn't want the built-in styling that the example page always comes with, I finally decided to use the &quot;Empty Blazor Web Assembly&quot; template. Last but not least, I linked <em>MyLife.Core</em> to the project now called <em>MyLife.Blazor.Wasm</em> in order to have access to the models, services and helpers created in the first parts of the article series.</p>
+<h2>Design - very simple please</h2>
+<p>Long-time readers of Dr. Windows will notice that I also used my standard styling for the MyLife.NET website, based on a class-less CSS template. Embarrassingly, I have to admit that I have customized this file over the years to such an extent that I can no longer find my original inspiration - except for the fact that it comes from the <a href="https://github.com/webdevjeffus/drop-in-css">Drop-In-CSS-Overview</a>.</p>
+<p>My lack of in-depth knowledge of web development means that the entire styling structure is heavily trimmed for simplicity. My CSS file lacks adaptations for different browsers or even responsiveness as well as the reuse of variables or &quot;prefixed attributes&quot;.</p>
+<p><a href="https://www.drwindows.de/news/wp-content/uploads/2025/05/Screenshot-2024-05-17-195757.png"><img src="https://www.drwindows.de/news/wp-content/uploads/2025/05/Screenshot-2024-05-17-195757.png" alt="" /></a></p>
+<p>Despite these limitations, I am satisfied with how my first attempt looks and operates on my system in my browser of choice. This is the most important thing in our tinkering. It's not for others to celebrate, but for us to enjoy it and feel like &quot;Yes, I've achieved something!&quot;.</p>
+<h2>CORS: My enemy who became a friend</h2>
+<p>Accessing data from a server and displaying it in the client is commonplace these days - as an app developer, this is also my daily bread and butter. For this reason, I had no doubt that it doesn't matter where my data is stored, as long as it can be accessed securely via <em>https</em>.</p>
+<p>Poppycock when it comes to web assembly - i.e. local JavaScript! This is where CORS comes into play, which in my case prevents me from retrieving my JSON files from a server other than the one where the Blazor files are located. So when I tried to develop the feature, my console was full of crash and error messages regarding data access. Crap - this is getting unnecessarily complicated! At first glance, CORS is a major hindrance, but at second glance, it's our bastion of digital security.</p>
+<h3>What is CORS</h3>
+<p>CORS (<a href="https://de.wikipedia.org/wiki/Cross-Origin_Resource_Sharing">Wikipedia</a>) stands for &quot;Cross-Origin Resource Sharing&quot;. It is a security policy that is implemented in all browsers. Websites can load resources such as images, other JavaScript files and the like from different domains. CORS was developed to prevent a website from accessing resources from another domain unless that domain explicitly allows it.</p>
+<p>CORS helps to prevent malicious attacks by ensuring that only trusted domains can access resources. Without CORS, attackers could potentially steal sensitive data or execute malicious code.</p>
+<h3>Solution: wwwroot/</h3>
+<p>If we look at the Blazor project in Visual Studio, we notice the special folder &quot;<em>wwwroot/</em>&quot;. This folder contains all the files that are delivered as normal files. In addition to our <em>*.css</em>\ files, it also contains the <em>index.html</em> page, which is initially delivered when the page is visited, as well as our *.json files, which we can then also pull in the context of WebAssembly.</p>
+<p>Since, as mentioned, I can't address external servers, I also have to approach <em>MyLife.Core</em> again and write an aggregation exporter for my Medium and YouTube feeds so that they can also be addressed in a WASM context.</p>
+<p><a href="https://www.drwindows.de/news/wp-content/uploads/2025/05/Screenshot-2024-05-17-195330.png"><img src="https://www.drwindows.de/news/wp-content/uploads/2025/05/Screenshot-2024-05-17-195330.png" alt="" /></a></p>
+<p>However, I still need to find a way to push the updated JSON files to the folder in question via automation. So there is still some thinking to do - but it would be boring if I didn't.</p>
+<h3>Not yet finished with MyLife.Blazor.Wasm</h3>
+<p>Contrary to expectations, this article will not be able to cover the entire topic of Blazor or <em>MyLife.Blazor</em> in general. Important cornerstones of development such as the CORS-safe data exchange mentioned above and the GitHub action behind it are still missing, as well as how to best structure Razor components. There are various patterns in web development, especially from the React camp. Roughly speaking, these relate to how much you should build components &quot;standalone&quot;, whether they should come with the required CSS information or whether there should be a large stylesheet file, and other topics in which I simply want to build up more confidence before I consider them done.</p>
+<p>In addition, there is still work to be done on caching, routing and other issues that need to be completed before I'm no longer afraid that it will break during the first test.</p>
+<h2>Am I disappointed?</h2>
+<p>In the first few minutes after I discovered the problems via CORS, yes. Because my original plan seemed to go up in smoke. This, coupled with my aversion to web technologies, caused Visual Studio to shut down hard and the computer to stay off for the evening. Over time, I realized that this was an exciting learning and that with a little extra brain power, I was able to turn this problem into a feature and pull out new functionality like the aforementioned Content Creation Feed Aggregator.</p>
+<h2>Would you like to get involved?</h2>
+<p>If you want to get involved because you want to show me how to do something properly or more easily, or you want to participate for the first time in a .NET solution that is still clearly laid out, you are welcome to visit <a href="https://github.com/tscholze/dotnet-mylife">GitHub</a>, fork the repository, open issues with problems or hints or simply browse.</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>
