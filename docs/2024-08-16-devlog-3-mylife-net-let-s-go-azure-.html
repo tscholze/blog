@@ -1,0 +1,67 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2024-08-16-devlog-3-mylife-net-let-s-go-azure-.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2024-08-16-devlog-3-mylife-net-let-s-go-azure-.html.png">
+          <meta property="og:title" content="Devlog #4 MyLife.NET - Let's go to the clouds with Azure?">
+          <meta property="og:description" content="'Tinkerers, Makers and Hobbyist on Azure? Does this work?">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Devlog #4 MyLife.NET - Let's go to the clouds with Azure?</h1>
+                
+                <p>Finding a practical solution to a problem that you have created yourself provides a certain satisfaction. In the last article of this series on <a href="https://github.com/tscholze/dotnet-mylife/">MyLife.NET</a>, we discussed the limitations that Blazor.WASM brings. Now, we have a solution for this using GitHub and Azure. What a developer's dream.</p>
+<h2>What was the problem?</h2>
+<p><a href="https://www.drwindows.de/news/entwicklertagebuch-mylife-3-wasn-blazor-wasm">In part 3 of our article series</a>, I realized that a Blazor WebAssembly project, or generally any JavaScript running locally on the client, can only access data on the same domain due to the security mechanism called CORS. This was a problem because the data source for <a href="https://github.com/tscholze/dotnet-mylife">MyLife.NET</a> can also be distributed - especially when it comes to accessing feeds from YouTube, Medium, and other platforms. The plan backfired. We needed a solution that provides all data in the domain-local context and, equally important, keeps it up to date.</p>
+<h2>Time for a new JSON file!</h2>
+<p>As mentioned in the first part, I was not sure how much data should be packed into the central JSON file of MyLife.NET. In the end, I decided to create a second JSON structure and file for the required summary of my digital publications, with the name <a href="https://tscholze.github.io/dotnet-mylife/data/cc-publications.json"><em>&quot;cc-publications.json</em></a>&quot;. This new file is created with the well-known <em><a href="https://github.com/tscholze/dotnet-mylife/blob/main/MyLife.Core/Generator/Exporter.cs">Exporter.cs</a></em> based on the stored Content Creation Accounts of the &quot;<em><a href="https://tscholze.github.io/dotnet-mylife/data/life.json">life.json</a></em>“ object and retrieved using the &quot;<em><a href="https://github.com/tscholze/dotnet-mylife/blob/main/MyLife.Core/Services/LifeService.cs">LifeService.cs</a></em>” available in all subprojects. Whether it makes sense to separate the context at the service level will be shown over time. At the moment, it is the simplest way to work with, but the simplest way is not always the one you should take.</p>
+<p>Speaking of simplicity: The new structure is based on already known models and can therefore be easily integrated without having to create and maintain duplicate classes.</p>
+<h2>GitHub Actions - the Swiss Army Knife of Automation</h2>
+<p>So now we know how to create this file, but not how to keep it up to date with the latest publications. This is where I concluded that GitHub Actions are ideal. A runner in the cloud that triggers the exporter once a day and finally places the corresponding files in the right place in the <em>wwwroot/</em> of <em>MyLife.Blazor.Wasm</em> using a Git commit and push command. This push in turn triggers another action that updates the <a href="https://tscholze.github.io/dotnet-mylife/">publicly accessible GitHub Page</a> and thus makes the freshly maintained data available to the environment.</p>
+<p>To further expand the thread of automation, not only is the static page on GitHub updated, but it is also directly deployed to an Azure Static Web App resource. So now we can all feel a bit like business people and get a taste of the gigantic Azure ecosystem with our little tinkering.</p>
+<h2>Azure for tinkering? Absolutely!</h2>
+<p>In my perception, Azure has never been something for tinkerers and makers, but rather for companies and enterprises that need the big program and don't have to live in fear that a wrong click will set their credit card on fire. Well, that may still be true, but over the years Microsoft has continuously expanded the <a href="https://azure.microsoft.com/en-in/pricing/free-services/">&quot;hobby&quot; offering</a>, in other words, the &quot;free&quot; plan of available resources, so that nowadays even as a tinkerer, you should take another look at Azure.</p>
+<p>One component of the hobby plan is the Static Web Apps, which are basically the Azure equivalent of GitHub Pages, but can be much more finely configured and integrated into the existing (enterprise) infrastructure if desired.</p>
+<h3>Surprisingly easy to set up</h3>
+<p>A surprise right from the start: the setup was child's play, as long as you read exactly what it says there. The wizard that guides you through the creation of a new Static Web App is self-explanatory, but packed with information and choices that you need to understand and digest.</p>
+<p>Words like &quot;resource group&quot;, &quot;pay-as-you-go&quot;, and others initially scared me off from delving deeper into the topic. This fear was taken away from me during the course of the wizard, by making it clear that - unless I want it differently - I start the web app in hobby plan mode, which is <a href="https://azure.microsoft.com/en-in/pricing/free-services/">free of charge</a>. Of course, this &quot;free&quot; comes with limitations that, as a tinkerer, I can initially ignore, such as bandwidth or data volume.</p>
+<h3>Azure &lt;3 GitHub</h3>
+<p>By now, it is evident that GitHub belongs to Microsoft and may even have a higher priority than the previously existing developer platform Azure DevOps aka Team Foundation. Why else would GitHub be listed before Azure DevOps? We will never know.</p>
+<p>After selecting the repository, Azure immediately recognizes what type of Static Web App it is, in our case a Blazor app, and suggests useful configuration values. As can be seen in the screenshots, a GitHub Action file is ultimately generated, which, for example, triggers an update of the Azure Static Web App with every push to the GitHub repository. This is what I call a seamless integration of two services with real added value for the developer - and I have to emphasize again how uncomplicated and painless all of this is nowadays!</p>
+<h3>Further Azure integrations possible in MyLife</h3>
+<p>Over time, further Azure integrations are conceivable in MyLife. One point would have been a no-brainer if Microsoft hadn't axed it: AppCenter Analytics, to be able to capture user interactions with the website and the resulting apps. So not everything is gold in the blue cloud - you just have to be aware of that in general. Nevertheless, the hobby plan still has many other products in store that could be worth looking at in the context of MyLife.</p>
+<p>Do you have any wishes or ideas for Azure products that I should take a look at? In general, for a &quot;non-WASM&quot; Blazor variant, a CosmoDB paired with Azure Functions could also be conceivable.</p>
+<h2>Do you want to contribute?</h2>
+<p>If you want to participate because you want to show me how to do something right or easier, or if you want to participate in a still manageable .NET solution for the first time, you are welcome to <a href="https://github.com/tscholze/dotnet-mylife/">visit GitHub</a>, fork the repository, open issues with problems or suggestions, or simply browse. We are all here to learn and, more importantly, to have fun with software development!</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>
