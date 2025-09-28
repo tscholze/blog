@@ -1,0 +1,91 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2025-09-28-devlog-8-how-helpful-is-copilot.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2025-09-28-devlog-8-how-helpful-is-copilot.html.png">
+          <meta property="og:title" content="Devlog #8 MyLife.NET — How helpful is GitHub Copilot?">
+          <meta property="og:description" content="">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Devlog #8 MyLife.NET — How helpful is GitHub Copilot?</h1>
+                
+                <p>The internet has a new buzzword: <a href="https://de.wikipedia.org/wiki/Vibe_Coding">Vibe Coding</a>. In short, you no longer write the code yourself—you let AI do the work. Whether that really works and what else happened, you’ll find out in this new <a href="https://github.com/tscholze/dotnet-mylife">MyLife.NET</a> developer diary.</p>
+<h2>What is Vibe Coding?</h2>
+<p>The term “Vibe Coding” describes a method where developers use AI tools like Copilot to build software by giving the AI a list of natural‑language instructions. The AI then generates the code. The focus is on speed and creativity without having to write code yourself. It’s particularly suited to quick prototypes and small projects. Some of the biggest products in this space are the <a href="https://www.cursor.com/">Cursor</a> editor and <a href="https://github.com/features/copilot">GitHub Copilot</a>, with the latter now offering far more than just code generation.</p>
+<p>The term isn’t exclusively positive. It’s also used pejoratively because you might lack control or understanding of the “self‑developed” software and thus be more vulnerable to security issues.</p>
+<h2>What is GitHub Copilot Edits?</h2>
+<p>GitHub Copilot is an AI‑powered assistant that helps developers write code faster and more efficiently. Copilot provides context‑aware suggestions, ranging from small line edits to generating entire functions.</p>
+<p>GitHub Copilot Edits is an extension aimed at editing and refactoring entire projects. With Edits, developers can make changes across multiple files by describing a list of requirements in natural language. Roughly speaking, it’s like writing a traditional requirements or specification document. The tool then proposes targeted file‑based code changes that you can review and adjust directly in the editor.</p>
+<p>On request, GitHub Copilot can also explain why certain changes are proposed. That helps me dig a little deeper—assuming you trust the explanations.</p>
+<h2>My experience</h2>
+<p>First things first: I’m still quite skeptical about “vibe coding” and AI‑assisted development, so consider this part of the diary subjective. I also used the free Copilot plan, which in my experience mainly differs in quota—not quality—compared to the paid tiers.</p>
+<p><a href="https://www.drwindows.de/news/wp-content/uploads/2026/04/Bildschirmfoto-2025-04-04-um-11.46.17.png"><img src="https://www.drwindows.de/news/wp-content/uploads/2026/04/Bildschirmfoto-2025-04-04-um-11.46.17-1024x864.png" alt="" /></a></p>
+<h3>Starting setup</h3>
+<p>As a base setup I use the stable build of Visual Studio Code with Microsoft’s official .NET, C#, and MAUI extensions. For AI I use the GitHub‑published Copilot and Copilot Chat extensions. All of this runs on a Mac mini with an M4 SoC. As usual, MyLife.NET is a solution with sub‑projects per feature—for example, Core for shared functionality and MAUI for the iOS and Android app.</p>
+<p>This was my first time working directly with Copilot, so I eased into prompt writing during the experiment—which may have affected the overall quality of this evaluation.</p>
+<h3>Confusion was confused</h3>
+<p>I’ll be honest—I hope it’s all my fault! If what I describe below is what other developers are seeing too, then good luck to us all.</p>
+<p>Visual Studio Code often seemed unsure whom to trust: its own code completion or the AI’s suggestions. Once the editor or I picked one, syntax coloring turned into more of a rainbow than any unicorn has ever seen. I’m a very visual developer and rely heavily on syntax highlighting—unexpected changes confuse me and distract me more than some compiler errors.</p>
+<h3>Careless mistakes galore</h3>
+<p>I also noticed the AI sometimes made very easily avoidable mistakes. For example, it added C#‑style comments inside XAML files (which are, roughly speaking, XML), or it gave XAML elements parameters they simply don’t have—at least not in the XAML dialect that MAUI uses.</p>
+<h3>Would tests help?</h3>
+<p>The assistant often left code that no longer compiled or changed behavior unexpectedly. Would a high, automatically verified test coverage be a good aid here, enabling the AI to correct the errors it introduces?</p>
+<h3>Help beyond code as well</h3>
+<p>What I really came to appreciate were tips outside of code changes—for example, how to enable the genuinely useful “Hot Reload” feature in Visual Studio, or how to start an Android (alas) emulator from the command line. These were the little heroes for me, nudging me to search the web less and simply ask the AI.</p>
+<h3>Good prompts are genuinely hard</h3>
+<p>Many of these problems might be mitigated with better prompts. I may also have expected too much “context knowledge”—like recognizing that it’s a MAUI project. Writing longer prompts is still hard for me; perhaps the Voice extension could help by letting me dictate them.</p>
+<h3>Don’t lose trust</h3>
+<p>I’m a 30‑something developer from Bavaria; I’m sometimes hard to convince to trust something new—especially when it proves a bit flaky. Still, GitHub Copilot has shown me often enough that I need to broaden my perspective. Much of the output and assistance was demonstrably helpful, and it always takes two to make a mistake—the AI and the human who asks it.</p>
+<p>Once I have credits again, I’ll keep using Copilot and gather more experience. Whether I want to spend money right now just to make more requests is something I still need to think about.</p>
+<h2>What else happened?</h2>
+<h3>Sometimes you just have to read the manual</h3>
+<p>I had to set up my .NET environment on a new machine and dreaded it: something always broke, paths were wrong, and so on—just thinking about it gave me chills. This time I did something we should all do more often: follow the instructions step by step instead of thinking “ah, I’ll do it my way.”</p>
+<p>The end result: everything worked much faster and without a single error.</p>
+<h3>New features?</h3>
+<p>As mentioned, I mostly used Copilot to improve the current codebase and add missing comments and the like. The only new feature during my evaluation was the start of the “Open Source” view in the .NET MAUI sub‑project, which is slowly taking shape.</p>
+<h3>Grouped list vs. vertical layout</h3>
+<p>For the Open Source view I wanted to use a grouped list like in the Blazor project. That doesn’t seem feasible with the current data structure. It may need to be just a string for the section name and a list of items for the entries.</p>
+<p>So in the near future I’ll switch this from a grouped list to a vertical stack layout. It’ll be interesting to see whether it loads dynamically or the view is built in one go with lots of images and text, which could lead to a sluggish UI—we’ll see!</p>
+<h3>Xcode 16 / iOS 18 ready</h3>
+<p>As is often the case with cross‑platform projects—be it .NET MAUI, React Native, or Flutter—when a new Xcode drops, things can break, especially if you update it by accident. This time, however, everything went smoothly, and our app is ready for Xcode 16 and iOS 18.4—no tears shed.</p>
+<h2>What’s next?</h2>
+<h3>Focus on MAUI</h3>
+<p>First, I need to carve out more time—those weekend coding sessions are getting rare as life moves on. Nevertheless, my focus is on the .NET MAUI app to bring it to feature parity with the Blazor app.</p>
+<p>For everyone asking about an app release: No, that’s unlikely in 2025. It’s not a focus right now, and I don’t see the value at the moment.</p>
+<h3>The web won’t be forgotten</h3>
+<p>Next I absolutely need to work on the design of that component. My CSS—which I’ve been lugging around for two decades—unsurprisingly feels outdated. I still don’t want to use anything generic though—maybe AI can help here?</p>
+<h2>Want to get involved?</h2>
+<p>If you’d like to contribute—whether to show me a better or simpler way, or to make your first contribution to a still‑manageable .NET solution—you’re warmly invited to stop by <a href="https://github.com/tscholze/dotnet-mylife">GitHub</a>, fork the repository, open issues with problems or suggestions, or just browse around. We’re all here to learn and, more importantly, to have fun building software!</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>

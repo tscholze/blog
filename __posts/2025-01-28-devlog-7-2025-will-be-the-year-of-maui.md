@@ -1,5 +1,5 @@
 ---
-title: 'Devlog #57 MyLife.NET - 2025 will Be the Year of MAUI'
+title: 'Devlog #7 MyLife.NET - 2025 will Be the Year of MAUI'
 date: '2025-01-31'
 ---
 
