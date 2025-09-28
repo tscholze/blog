@@ -1,5 +1,5 @@
 ---
-title: 'Devlog #6 MyLife.NET — Let us go mobile with MAUI'
+title: 'Devlog #6 MyLife.NET - Let us go mobile with MAUI'
 date: '2024-10-28'
 ---
 

@@ -1,0 +1,59 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2025-09-28-rapinet-2-measure-the-enviro.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2025-09-28-rapinet-2-measure-the-enviro.html.png">
+          <meta property="og:title" content=".NET on Pi: Measure the environment with Enviro pHAT">
+          <meta property="og:description" content="">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>.NET on Pi: Measure the environment with Enviro pHAT</h1>
+                
+                <p>Our journey with .NET on the Raspberry Pi continues. In the previous part of the series, we got an LED strip to blink; now we’ll read the current air temperature. But things turned out differently than expected.</p>
+<h2>Pimoroni Enviro pHAT</h2>
+<p>The now unfortunately discontinued <a href="https://learn.pimoroni.com/article/getting-started-with-enviro-phat">Enviro pHAT from Pimoroni</a> is a small add‑on board (a HAT) for the Raspberry Pi that combines several environmental sensors. With it you can measure temperature, air pressure, light, color, motion, and analog signals. In theory, that makes it ideal for small weather stations or room monitoring. An explanation—and a possible workaround—for a major drawback in real‑world use follows later in the article.</p>
+<h3>BMP280</h3>
+<p>The BMP280 chip used on the HAT is a compact and versatile sensor from Bosch, widely used for environmental measurements. It precisely measures temperature and air pressure, making it ideal for weather stations, altitude measurements, or room monitoring. It works with a piezoresistive element whose electrical resistance changes with pressure. These subtle changes are processed digitally inside the sensor. With stored calibration data, the BMP280 delivers reliable and accurately reported values. Via interfaces like I²C or SPI, it connects easily to devices such as the Raspberry Pi or Arduino, providing a straightforward way to capture environmental data in your projects.</p>
+<h2>Entwicklung</h2>
+<h3>The plan</h3>
+<p>I’d love to say it was just as complex as our tinkering back in the Windows 10 IoT Core days on Dr. Windows—when we had to calculate and tweak calibration bit‑shuffles and compensation values ourselves, spending hours experimenting and always fearing we’d fry the chip with a wrong write command. And I actually felt like diving back in after all those years.</p>
+<h3>Reality</h3>
+<p>I asked GitHub Copilot’s free tier for an implementation and provided the BMP280’s I²C address. After several steps and loops—where it recognized and fixed its own mistakes—I had, in about two minutes, a C# class that, using the official .NET NuGet packages <code>System.Device.Gpio</code> and <code>Iot.Device.Bindings</code>, read temperatures and output them more or less correctly formatted. Without me having to do anything else by hand. A bit scary.</p>
+<p>So there isn’t much to explain here: thanks to the powerful .NET framework and GitHub Copilot, there was very little “original” work from me at this stage—and one shouldn’t adorn oneself with borrowed plumes.</p>
+<h3>Finishing touches</h3>
+<p>Even the cleanup and documentation were largely possible with GitHub Copilot. Of course, my inner neat freak couldn’t resist hand‑tweaking a few things and renaming variables—but that’s likely on my boomer genes, not on Copilot’s quality.</p>
+<h2>Das Projekt</h2>
+<p>If you take a look at the <a href="https://github.com/tscholze/dotnet-iot-raspberrypi-enviro">source code on GitHub</a>, you’ll notice it does more than just read BMP280 sensor data. If you enjoy posts like this, I’m happy to continue with other sensors—or entirely different Raspberry Pi adventures. Let us know!</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>

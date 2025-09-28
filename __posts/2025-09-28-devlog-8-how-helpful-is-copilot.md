@@ -1,5 +1,5 @@
 ---
-title: 'Devlog #8 MyLife.NET — How helpful is GitHub Copilot?'
+title: 'Devlog #8 MyLife.NET - How helpful is GitHub Copilot?'
 date: '2025-04-12'
 ---
 
