@@ -1,0 +1,73 @@
+<!doctype html>
+        <html class="no-js" lang="">
+
+        <head>
+          <meta charset="utf-8">
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta property="og:type" content="article" />
+          <meta name="twitter:card" content="summary_large_image">
+          <meta property="og:url" content="https://tscholze.github.io/blog/2024-10-08-devlog-4-mylife-more-azure.html" />
+          <meta property="og:image" content="https://tscholze.github.io/blog/2024-10-08-devlog-4-mylife-more-azure.html.png">
+          <meta property="og:title" content="Devlog #5 MyLife.NET - Even more function-al Azure">
+          <meta property="og:description" content="What other Azure services could be benefitial? Let's explore the serverlessness!">
+
+          <title>Tobias Scholze | The Stuttering Nerd</title>
+
+          <link rel="icon" href="favicon.ico" sizes="any">
+          <link rel="icon" href="icon.svg" type="image/svg+xml">
+          <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+          <link rel="stylesheet" href="style.css">
+        </head>
+
+        <header>
+            Tobias Scholze | The Stuttering Nerd
+            <hr />
+        </header>
+
+        <content>
+                            <h1>Devlog #5 MyLife.NET - Even more function-al Azure</h1>
+                
+                <p>In the last post, we started our <a href="https://github.com/tscholze/dotnet-mylife">MyLife.NET</a> journey into the world of Microsoft Azure, and since then, I have been thinking about how to further integrate the free services of the cloud into MyLife.NET. A great <a href="https://www.linkedin.com/feed/update/urn:li:activity:7209136727171510272?commentUrn=urn%3Ali%3Acomment%3A%28activity%3A7209136727171510272%2C7210718128538824708%29&amp;dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287210718128538824708%2Curn%3Ali%3Aactivity%3A7209136727171510272%29">comment on LinkedIn</a> by <a href="https://www.linkedin.com/in/jens-walter-125544140/">Jens</a> sparked the idea of trying out <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview?pivots=programming-language-csharp">Azure Functions</a>. In this diary entry, I will share how this evaluation went.</p>
+<h2>Use-case: Random Nickname</h2>
+<p>There's no point in exploring a new technology if you don't know what you want to use it for and how to approach the new world of the cloud. That's why, for starters, I decided to go with the simple use-case of &quot;Give me a random nickname from the Life object&quot;.</p>
+<p>In short, by making a GET web request to a specific URL, a randomly selected nickname will be returned in a JSON structure. Thanks to &quot;serverless computing&quot;, we don't need to run a complete server for this. We simply throw the source code to the cloud, which will execute it in this specific case.</p>
+<h3>Creating an Azure Function</h3>
+<p>To create a new function, it is sufficient to add a new subproject in the solution in Visual Studio. Microsoft provides various templates for this purpose. For this tinkering, the &quot;Azure Function with HTTP Trigger&quot; template is the one we need. The project is named <code>MyLife.Azure.Functions</code> (<a href="https://github.com/tscholze/dotnet-mylife/tree/main/MyLife.Azure.Functions">GitHub</a>), as multiple functions can be included within a single project.</p>
+<p>Thanks to the ability to include already created subprojects like &quot;MyLife.Core&quot;, we theoretically have all the possibilities to access our digital life. This makes the actual implementation very easy, assuming we have a good solution structure and domain design.</p>
+<h3>The Implementation</h3>
+<p>One Azure Function per C# class. This clear separation keeps the clarity alive even in large projects and ensures that the lifecycle of a cloud function is clearly visible. For our small use-case, the &quot;<code>Run(...)</code>&quot; method is sufficient.</p>
+<p>In this method, I load the JSON from another endpoint and return a randomly selected list element from the data field <code>MyLife.Persona.Nicknames</code> as the response.</p>
+<h3>Execution</h3>
+<p>It is important to distinguish whether we start it locally for development purposes or push it to the cloud later on. Locally, the Azure Functions Simulator starts, which feels and looks like a modern terminal application - including localhost URLs for each started function. These can be accessed as usual, which is possible in our simple case simply by using a browser.</p>
+<p>If you want to start the function in the Azure Cloud, Visual Studio includes a wizard to create a new deployment and carry it out via the familiar &quot;Right-click -&gt; Publish&quot; menu.</p>
+<p>In the end, this automatically sets up resources in the specified Azure environment and uploads the function project. This is not the only option. In the Azure Portal itself, there are other options available, such as creating the necessary resources and deploying via GitHub or even writing a function entirely in the browser.</p>
+<h2>I still have a lot to learn</h2>
+<p>The complexity of what I have built in MyLife.NET so far makes some learning curves more challenging than others. Suddenly, there are not only new frameworks to understand, but also how to handle stateless sessions or, in the case of Azure, how to avoid burning a hole in my wallet.</p>
+<p>This is not meant to sound negative. I see it as a challenge that comes with modern software development. It also demonstrates the possibilities that C# and the .NET ecosystem offer.</p>
+<h3>A real value is missing</h3>
+<p>Even though tinkering in the cloud is fun, I am still looking for the real value of it. Of course, if MyLife.NET were a production-ready software, it would be different. As a hobby and after-work project, it remains exciting to see how the various Azure services can be used to bring joy and benefits.</p>
+<h3>MyLife is not cloud-ready</h3>
+<p>While tinkering, I noticed that the current structure of MyLife.NET is not cloud-ready. The location where one can define their own life and how to access it in different subprojects like Blazor, MAUI, or now Functions, exceeds the limits of the domain pattern and needs to be adjusted as soon as possible. The mixture of &quot;when do I create life&quot; and &quot;when do I read it from an endpoint&quot; severely limits me in the stateless Azure Functions experiment.</p>
+<h3>Concerns about costs remain</h3>
+<p>Despite studying the <a href="https://azure.microsoft.com/en-in/pricing/free-services/">&quot;Always free&quot; section in the documentation</a> and the price lists, it was not clear to me if and when Azure Functions incur costs. Since my code not only executes statically but also loads JSON files from external sources, there is data traffic that is usually not provided completely for free. Unlike Azure Static Web Apps, I couldn't find the &quot;Hobby&quot; or &quot;Free&quot; plan mentioned anywhere.</p>
+<p>For experts in this field, the information is probably easy to find, but as a tinkerer, I find it difficult to make a meaningful statement about this. That's why, after my tests, I stopped the public deployments and even deleted all the resources. Otherwise, the Swabian in me wouldn't have had a peaceful sleep due to the worry of a glowing credit card.</p>
+<h2>What's next?</h2>
+<p>As mentioned, the structure of how the individual subprojects interact needs to be improved to ensure better separation between creating and consuming MyLife data sources in the future. There is also the question of whether, for example, the created JSON file should be the source of all information or if it should be the created C# object. If it's the latter, where does it live, how do other subprojects access it, and how does everything actually make sense? Many open questions that need to be answered.</p>
+<p>Before tackling this challenge, the starting signal for the MAUI app will probably be given - simply because I am currently more interested in this topic and, thanks to the fact that this is an after-work and tinkering project, I can prioritize tasks as I like. Oh, how nice.</p>
+<h2>Want to contribute?</h2>
+<p>If you want to participate because you want to show me how to do something right or easier, or if you want to participate in a still manageable .NET solution for the first time, you are welcome to visit GitHub, <a href="https://github.com/tscholze/dotnet-mylife">fork the repository</a>, open issues with problems or suggestions, or simply browse around. We are all here to learn and, more importantly, to have fun with software development!</p>
+
+                 
+                 <a href="index.html">Back</a>
+        </content>
+
+        <footer>
+            <hr />
+           Made with ❤️ without JavaScript| Kotlog | Tobias Scholze | <a href="https://github.com/tscholze" title="GitHub" target="_bank"><i class="fab fa-github"></i></a> <a href="https://twitter.com/tobonautilus" title="Twitter"  target="_bank"><i class="fab fa-twitter"></i></a> <a rel="me" href="https://mastodon.social/@tobonaut" title="Mastodon" target="_bank"><i class="fab fa-mastodon"></i></a>
+        </footer>
+
+        </html>
